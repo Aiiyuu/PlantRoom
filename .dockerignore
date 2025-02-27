@@ -1,0 +1,35 @@
+# Git-related files and directories
+.git/
+.gitignore
+
+# Node.js modules and Vue/Frontend dependencies
+frontend/node_modules/
+frontend/dist/
+frontend/.nuxt/
+frontend/.next/
+frontend/.cache/
+
+# Python virtual environment and backend dependencies
+env/
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/.pytest_cache/
+backend/.tox/
+
+# Logs and temporary files
+*.log
+*.pid
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# System-specific files
+.DS_Store
+Thumbs.db
+
+# Docker-specific files
+Dockerfile
+.dockerignore
