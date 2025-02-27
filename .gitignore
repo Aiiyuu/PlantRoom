@@ -1,0 +1,39 @@
+# Python/Django
+.env/                      # Virtual environment folder
+*.pyc                       # Python bytecode
+__pycache__/                # Python cache directory
+db.sqlite3                  # SQLite database
+*.log                       # Log files
+*.pot                       # Translation files
+*.pyc                       # Python bytecode
+*.pyo                       # Optimized Python files
+*.db                        # Database files
+media/                      # Django media files (if you're using a local file system for media)
+
+# Docker
+.dockerignore               # Docker ignore file
+docker-compose.override.yml # Docker Compose override (if used)
+*.log                       # Docker logs
+*.pid                       # Process ID files
+*.sock                      # Unix socket files
+docker-data/                # Data volumes (depending on your use case)
+
+# Node/Vue
+node_modules/               # Node.js dependencies
+npm-debug.log               # NPM debug logs
+yarn-error.log              # Yarn error logs
+dist/                       # Vue build artifacts (e.g., when running `vue-cli-service build`)
+*.env                       # Environment variables for frontend (if separate)
+
+# TypeScript
+*.tsbuildinfo               # TypeScript build info
+
+# IDE/Editor files
+.vscode/                    # VSCode settings
+.idea/                      # JetBrains IDE settings (IntelliJ, PyCharm, etc.)
+*.swp                       # Swap files from editors like Vim
+*.swo                       # Swap files from editors like Vim
+
+# OS generated files
+.DS_Store                   # macOS
+Thumbs.db                   # Windows
