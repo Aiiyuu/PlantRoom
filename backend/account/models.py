@@ -1,6 +1,9 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -16,6 +19,7 @@ class CustomUserManager(UserManager):
     - A method to create superusers with the necessary flag sets for admin access.
     - A private method '_create_user' that handles the common logic for user creation. 
     """
+    
     def _create_user(self, name, email, password, **extra_fields):
         """ 
         Check if the email address is provided and convert it to a standard format.
@@ -62,4 +66,45 @@ class CustomUserManager(UserManager):
         
         return self._create_user(name, email, password, **extra_fields)
     
+
+class Use(AbstractBaseUser, PermissionsMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(unique=True)
+    name = models.CharField(max_length=100, blank=False)
     
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    
+    date_joined = models.DateTimeField(default=timezone.now)
+    
+    objects = CustomUserManager()
+    
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = []
+    
+    def __str__(self):
+        """Display the object in a human-readable way."""
+        return f'{self.email}'
+    
+    def is_regular_user(self):
+        """Check if user is regular and return True or False."""
+        
+        return not self.is_staff and not self.is_superuser
+    
+    def clean(self):
+        """Validates user's name."""
+        super().clean() # Call the base class's clean method
+        
+        self.name = self.name.stip() # Strip leading/trailing spaces from the name field
+        
+        if len(self.name) < 3:
+            raise ValidationError('Name cannot be empty or only contain less than 3 characters.')
+        
+    
+    def save(self, *args, **kwargs):
+        """Ensure that the 'clean' method is called before the user instance would be save."""
+        
+        self.clean()
+        super().save(*args, **kwargs)
