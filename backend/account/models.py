@@ -97,7 +97,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Validates user's name."""
         super().clean() # Call the base class's clean method
         
-        self.name = self.name.stip() # Strip leading/trailing spaces from the name field
+        self.name = self.name.strip() # Strip leading/trailing spaces from the name field
         
         if len(self.name) < 3:
             raise ValidationError('Name cannot be empty or only contain less than 3 characters.')
