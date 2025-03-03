@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # MEDIA_ROOT and MEDIA_URL settings
 MEDIA_ROOT = BASE_DIR / 'media' # Path where media files will be stored
-MEDIA_ROOT = '/media/' # URL to access media files from the web
+MEDIA_URL = '/media/' # URL to access media files from the web
 
 
 # Quick-start development settings - unsuitable for production
