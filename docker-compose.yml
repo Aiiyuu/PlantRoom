@@ -4,6 +4,7 @@ services:
       context: ./backend
     volumes:
       - ./backend:/app
+      - ./backend/media:/app/media  # Mount the media directory to the container
     ports:
       - "8000:8000"
     environment:
