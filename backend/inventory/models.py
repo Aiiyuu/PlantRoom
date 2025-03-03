@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.core.exceptions import ValidationError
 
@@ -7,6 +9,9 @@ import os
 
 
 class Plant(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # id = models.BigAutoField(primary_key=True)
+    
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField(max_length='1500', blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -53,11 +58,15 @@ class Plant(models.Model):
     def clean(self):
         """Validates model fields like: name, price, discount_percentage and image"""
         
-        self.name = self.name.stip() # Stip leading/traveling spaces from the name field.
+        self.name = self.name.strip() # Stip leading/traveling spaces from the name field.
         
         # Check if the name field is not empty or fewer than three characters.
         if len(self.name) < 3:
             raise ValidationError('The name cannot be empty or contain fewer than 3 characters.')
+        
+        # Check if the description is no longer than 1500 characters.
+        if self.description and len(self.description) > 1500:
+            raise ValidationError('The description field cannot be longer than 1500 characters.')
         
         # Check if the price field is greater than zero.
         if self.price < 0:
