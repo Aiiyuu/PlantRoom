@@ -1,20 +1,20 @@
 import uuid
-import os
-import shutil
 
-from django.test import TestCase, override_settings
-from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase
 from django.core.exceptions import ValidationError
 from inventory.models import Plant
+from .base_test import FileUploadTestCase # Custom class for file handling
 
 
-TEST_DIR = 'test_plant' # A name for a new test directory used to store uploaded test files
-
-
-@override_settings(MEDIA_ROOT=(TEST_DIR + '/media'))
-class PlantModelTest(TestCase):
+class PlantModelTest(FileUploadTestCase):
     """
     Test the functionalities of the Plant model to ensure that all methods are working correctly.
+    
+    FileUploadTestCase is a custom base test case class that provides utility methods
+    to handle file uploads in Django tests. It automates the setup of a temporary
+    directory for storing uploaded files, ensuring that the `MEDIA_ROOT` is configured
+    properly during the test. It also ensures that files are cleaned up and deleted
+    after each test is run, preventing test pollution and improving isolation.
     
 
     - Test plant creation.
@@ -39,13 +39,7 @@ class PlantModelTest(TestCase):
     def setUp(self):
         """Create assets for the tests aformentioned."""
         
-        # Create a mock image file (in this case, a fake JPEG file)
-        self.correct_image_file = SimpleUploadedFile(
-            name='test_image.jpg',
-            content=b'fake image content',
-            content_type='image/jpeg' # Simulated MIME type for a JPEG image
-        )
-        
+        super().setUp()  # Make sure to call the parent setUp to initialize file handling
         
         # Create a Plant object with correct data
         self.correct_plant_object = Plant.objects.create(
@@ -54,7 +48,7 @@ class PlantModelTest(TestCase):
             price=20.00,
             discount_percentage=10,
             stock_count=120,
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
     
     
@@ -68,7 +62,7 @@ class PlantModelTest(TestCase):
             price=10.00,
             discount_percentage=20,
             stock_count=50,
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
         
         
@@ -102,7 +96,7 @@ class PlantModelTest(TestCase):
         new_plant_object = Plant.objects.create(
             name='Fiddle Leaf Fig',
             price=85.50,
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
         
         # Ensure that the UUIDs of two plant objects are not the same
@@ -131,7 +125,7 @@ class PlantModelTest(TestCase):
         plant = Plant(
             name='lv',
             price=22.50,
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
         
         # Test that it raises a ValidationError when the clean method is called.
@@ -145,7 +139,7 @@ class PlantModelTest(TestCase):
             price=22.50,
             discount_percentage=15,
             stock_count=80,
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
         
         # Test that it raises a ValidationError when the clean method is called.
@@ -160,7 +154,7 @@ class PlantModelTest(TestCase):
         plant = Plant(
             name='     Rosa   ',
             price=22.50,
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
         
         
@@ -177,7 +171,7 @@ class PlantModelTest(TestCase):
             name='Rosa',
             description='A' * 1501,
             price=22.50,
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
         
         # Check if the clean method raises a ValidationError
@@ -192,7 +186,7 @@ class PlantModelTest(TestCase):
         plant = Plant(
             name='Rosa',
             price=-10.50, # It must be a positive value
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
         
         # Check if the new plant instance raises a ValidationError
@@ -204,7 +198,7 @@ class PlantModelTest(TestCase):
         plant = Plant(
             name='Rosa',
             price=10000000000.50, # It must be 10 digits before the decimal point
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
         
         # Check if the new plant instance raises a ValidationError after calling the clean method
@@ -220,7 +214,7 @@ class PlantModelTest(TestCase):
             name='Rosa',
             price=10.50,
             stock_count=-10, # It must be a positive value
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
         
         # Check if the new Plant instance raises a ValidationError after calling the clean method
@@ -236,7 +230,7 @@ class PlantModelTest(TestCase):
             name='Rosa',
             price=10.50,
             discount_percentage=110, # It must be between 0 and 100 (inclusively)
-            image=self.correct_image_file
+            image=self.create_valid_image()
         )
         
         # Check if the new Plant instance triggers a ValidationError after calling the clean method
@@ -247,20 +241,12 @@ class PlantModelTest(TestCase):
     def test_invalid_image_format(self):
         """Test that a Plant object with an incorrect image format, cannot be saved to the database."""
         
-        # Create a mock image file (in this case with the unsupported format, gif)
-        incorrect_image_file = SimpleUploadedFile(
-            name='invalid_format.gif',
-            content=b'fake image content',
-            content_type='image/gif' # Simulated MIME type for a GIF image
-            # Only PNG, JPG or JPEG formats are allowed
-        )
-        
         
         # Create a new Plant object with the invalid image field
         plant = Plant(
             name='Rosa',
             price=15.00,
-            image=incorrect_image_file
+            image=self.create_invalid_image() # Returns a GIF image
         )
         
         
@@ -272,20 +258,12 @@ class PlantModelTest(TestCase):
     def test_image_size_limit(self):
         """Ensure that a Plant object cannot be saved if the image field size exceeds allowed 10MB"""
         
-        # Create a mock image file (in this case with a data parameter that exceeds the allowed 10MB)
-        large_file_size = SimpleUploadedFile(
-            name='large_image.jpeg',
-            content=b'Fake image content',
-            content_type='image/jpeg'
-        )
-        
-        large_file_size.size = (10 * 1024 * 1024) + 1
         
         # Create a new Plant object with an incorrect image field
         plant = Plant(
             name='Rosa',
             price=10.00,
-            image=large_file_size # Only 10MB is allowed
+            image=self.create_large_image() # Returns a 15MB image
         )
         
         # Check that the clean method raises a ValidationError for the image field
@@ -302,8 +280,7 @@ class PlantModelTest(TestCase):
         # Ensure it starts with the correct folder
         self.assertTrue(self.correct_plant_object.image.name.startswith('plants/'))
         
-    
-    
+      
     def test_get_discount_price_method(self):
         """Test that the get_discount_method calculates and returns the correct value."""
         
@@ -316,11 +293,11 @@ class PlantModelTest(TestCase):
         
         # Create a new Plant object to test if the in-stock property will 
         # return True when the stock_count is greater than zero.
-        plant_1 = Plant(name='Rosa', price=10.00, stock_count=50, image=self.correct_image_file)
+        plant_1 = Plant(name='Rosa', price=10.00, stock_count=50, image=self.create_valid_image())
         
         # Create a new Plant object to test if the in-stock property will
         # return False when the stock_count is equal to zero
-        plant_2 = Plant(name='Rosa', price=10.00, stock_count=0, image=self.correct_image_file)
+        plant_2 = Plant(name='Rosa', price=10.00, stock_count=0, image=self.create_valid_image())
         
         self.assertTrue(plant_1.in_stock) # Should return True
         self.assertFalse(plant_2.in_stock) # Should return False
@@ -331,15 +308,3 @@ class PlantModelTest(TestCase):
         
         # Ensure that the __str__ method returns the name of the Plant object
         self.assertEqual(str(self.correct_plant_object), self.correct_plant_object.name)
-        
-    
-    def tearDown(self):
-        """Remove the test directory used to store the uploaded fiels for the tests."""
-        
-        # Check if the directory exists to remove it
-        if os.path.exists(TEST_DIR):
-            shutil.rmtree(TEST_DIR)
-
-                
-                
-        super().tearDown()  # Ensure any other tearDown logic is also called
