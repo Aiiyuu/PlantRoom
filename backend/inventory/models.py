@@ -71,6 +71,14 @@ class Plant(models.Model):
         # Check if the price field is greater than zero.
         if self.price < 0:
             raise ValidationError('The price field must be greater than 0.')
+        
+        # Chekc if the stock_count is greater than zero
+        if self.stock_count < 0:
+            raise ValidationError("The stock_count field cannot be negative.")
+        
+        # Check that the price does not exceed 10 digits before the decimal point
+        if len(str(int(self.price))) > 10:  # Converts to int to count digits before the decimal
+            raise ValidationError("Price cannot be longer than 10 digits.")
     
         # Check if the discount_percentage is between 0 and 100 (inclusive)
         if not (0 <= self.discount_percentage <= 100):
