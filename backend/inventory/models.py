@@ -101,7 +101,7 @@ class Plant(models.Model):
     
     
     def save(self, *args, **kwargs):
-        """Ensure that the 'clean' method is called before the use instance would be saved."""
+        """Ensure that the 'clean' method is called before the instance would be saved."""
         
         self.clean() # Call the 'clean' method
         super().save(*args, **kwargs)
