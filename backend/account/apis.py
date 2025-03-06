@@ -3,6 +3,7 @@ from rest_framework import status
 from .models import User, CustomUserManager
 from rest_framework.response import Response
 from .forms import SignupForm
+from cart.models import Cart
 
 
 class Signup(APIView):
@@ -33,7 +34,10 @@ class Signup(APIView):
         if form.is_valid():
             user = form.save()
             
-            return Response({'message': ''}, status=status.HTTP_201_CREATED)
+            # Create an empty Cart object associated with the user.
+            Cart.objects.create(user=user)
+            
+            return Response({'message': 'User was created successfully.'}, status=status.HTTP_201_CREATED)
         
         else:
             errors = [] # Initialize an empty list of errors 
