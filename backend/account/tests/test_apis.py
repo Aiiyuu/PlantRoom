@@ -2,6 +2,7 @@ from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
 from account.models import User
+from cart.models import Cart
 
 
 class SignupAPIViewTest(APITestCase):
@@ -9,6 +10,7 @@ class SignupAPIViewTest(APITestCase):
     Test the behavior and functionality of the Signup api view.
     
     - Test successful user creation with valid data.
+    - Test the creation of an empty cart.
     - Test unsuccessful user creation with invalid data.
         - Invalid email formats.
         - Mismatched passwords.
@@ -38,6 +40,27 @@ class SignupAPIViewTest(APITestCase):
         
         # Ensure that the created user object exists in the database.
         self.assertTrue(User.objects.filter(email='test@test.com').exists())
+        
+        
+    def test_cart_creation_when_user_singup(self):
+        """Ensure that the empty cart is created after the user signs up."""
+        
+        # Create valid data for the user object
+        data = {
+            'name': 'testuser',
+            'email': 'test@test.com',
+            'password1': 'strongpassword123123',
+            'password2': 'strongpassword123123',
+        }
+        
+        # Make a POST request to the signup API, passing the valid data for user object creation in JSON format.
+        response = self.client.post(reverse('signup'), data, format='json')
+        
+        user = User.objects.get(email=data['email']) # Get the user object from the database
+        
+        # Assert the cart was created
+        self.assertTrue(Cart.objects.filter(user=user).exists())
+        
         
         
     def test_signup_invalid_email_format(self):
