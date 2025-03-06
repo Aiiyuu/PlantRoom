@@ -1,4 +1,6 @@
-from rest_framework.test import APITestCase, APIClient
+import uuid
+
+from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
 from inventory.models import Plant
@@ -71,3 +73,61 @@ class PlantListAPITest(FileUploadTestCase):
     
         # Assert that the response message matches the expected error message
         self.assertEqual(response.data['detail'], 'No plants found.')
+        
+        
+class PlantDetailAPITest(FileUploadTestCase):
+    """
+    Test the behavior of the PlantDetailAPITest endpoint.
+    
+    FileUploadTestCase is a custom base test case class that provides utility methods
+    to handle file uploads in Django tests. It automates the setup of a temporary
+    directory for storing uploaded files, ensuring that the `MEDIA_ROOT` is configured
+    properly during the test. It also ensures that files are cleaned up and deleted
+    after each test is run, preventing test pollution and improving isolation.
+    
+    - Verify that the API returns data from the database
+    - Test the behavior when there is no data in the database
+    """
+    
+    def setUp(self):
+        
+        super().setUp() # Call the setUp of the FileUploadTestCase to handle media root setup
+        
+        # Initial the APIClient instance for testing
+        self.client = APIClient()
+        
+        
+        # Create a few Plant objects
+        self.plant_1 = Plant.objects.create(name='Rosa', price=15.00, image=self.create_valid_image())
+        self.plant_2 = Plant.objects.create(name='Violet', price=12.50, image=self.create_valid_image())
+        
+        
+    def test_plant_detail_success(self):
+        """Test that the PlantDetailAPI returns correct details for an existing plant."""
+        
+        
+        # Make a GET request to the plant detail endpoint with the plant's UUID
+        response = self.client.get(reverse('plant-detail', args=[self.plant_2.id]))
+        
+        # Assert the status code is 200 (OK)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+        # Verify the plant data returned matches the expected data
+        self.assertEqual(response.data['name'], self.plant_2.name)
+        self.assertAlmostEqual(float(response.data['price']), self.plant_2.price)
+        self.assertEqual(response.data['image'], '/media/' + self.plant_2.image.name)
+        
+        
+    def test_plant_detail_not_found(self):
+        """Test that the PlantDetailAPI returns a 404 when the plant is not found."""
+        
+        # Generate a randomo UUID that does not exist in the database
+        non_existent_uuid = uuid.uuid4()
+        
+        # Make a GET request to the plant detail endpoint with the non-existent UUID
+        response = self.client.get(reverse('plant-detail', args=[non_existent_uuid]))
+        
+        
+        # Assert the status code is 404 (Not Found)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        
