@@ -57,7 +57,7 @@ class AddCartItemAPI(APIView):
     It requires the plant ID to be passed in the POST request.
     """
     
-    # Restrict access to unauthenticated users
+    # Restrict access for unauthenticated users
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     
@@ -65,10 +65,10 @@ class AddCartItemAPI(APIView):
     def post(self, request, *args, **kwargs):
         """Add a cart item to the cart object."""
         
-        # Retrieve the Cart object from the database, or return a 404 if it is not found.
+        # Retrieve the Cart object from the database or return a 404 if it is not found.
         cart = get_object_or_404(Cart, user=request.user)
         
-        # Retrieve the Plant object from the database, or return a 404 if it is not found.
+        # Retrieve the Plant object from the database or return a 404 if it is not found.
         plant = get_object_or_404(Plant, id=request.data.get('plant_id'))
         
         # Create a CartItem object
@@ -76,3 +76,36 @@ class AddCartItemAPI(APIView):
         cartItem = CartItem.objects.create(cart=cart, product=plant, quantity=1)
         
         return Response(status=status.HTTP_200_OK)
+
+
+class DeleteCartItemAPI(APIView):
+
+     """
+        The DeleteCartItemAPI handles a DELETE request to remove a specific CartItem object
+        from the database, based on the product_id parameter passed by the user.
+
+        This API endpoint allows authenticated users to delete a product they have added
+        to the cart. It requires them to pass the product ID.
+     """
+
+     # Restriction access for unauthenticated users
+     authentication_classes = [SessionAuthentication]
+     permission_classes = [IsAuthenticated]
+
+     def delete(self, request, *args, **kwargs):
+         """Delete a CartItem from the user's cart"""
+
+         # Retrieve the Cart object from the database, or return 404 if it is not found
+         cart = get_object_or_404(Cart, user=request.user)
+
+         # Retrieve the Plant object from the database or return 404 if it's not found
+         plant = get_object_or_404(Plant, id=request.data.get('plant_id'))
+
+         # Retrieve the CartItem object
+         cart_item = get_object_or_404(CartItem, cart=cart, product=plant)
+
+
+         cart_item.delete() # Delete the CartItem from the database
+
+         return Response(status=status.HTTP_204_NO_CONTENT)
+
