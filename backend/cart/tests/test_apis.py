@@ -277,3 +277,125 @@ class AddCartItemAPITest(FileUploadTestCase):
         self.assertEqual(new_cart_item.product, new_plant)  # Ensure the CartItem is linked to the right plant
 
 
+
+class DeleteCartItemAPITest(FileUploadTestCase):
+    """
+    Test case for verifying the functionalities of the DeleteCartItemAPITest endpoint.
+
+    FileUploadTestCase is a custom base test case class that provides utility methods
+    to handle file uploads in Django tests. It automates the setup of a temporary
+    directory for storing uploaded files, ensuring that the `MEDIA_ROOT` is configured
+    properly during the test. It also ensures that files are cleaned up and deleted
+    after each test is run, preventing test pollution and improving isolation.
+
+    Tests:
+        - Test the endpoint restriction for unauthenticated users.
+        - Test the behavior when the Cart object does not exist in the database.
+        - Test the behavior when the Plant object does not exist in the database.
+        - Test the behavior when the CartItem object does not exist in the database.
+        - Test the successful deletion of the CartItem object.
+    """
+
+    def setUp(self):
+
+        super().setUp() # Call the setUp of FileUploadTestCase to handle the media root setup
+
+        # Initial the APIClient instance for testing
+        self.client = APIClient() # Create a new instance of the APIClient
+
+        self.url = reverse('delete-cart-item') # Get the URL endpoint
+
+        # Create a regular User object
+        self.user = User.objects.create_user(name='test', email='test@test.com', password='a12a14t56')
+
+        # Create a Cart object associated with the User object created above.
+        self.cart = Cart.objects.create(user=self.user)
+
+        # Create a Plant object
+        self.plant = Plant.objects.create(name='Chamomile', price=12.20, image=self.create_valid_image())
+
+        # Create a CartItem object associated with the Plant and Cart object created above.
+        self.cart_item = CartItem(cart=self.cart, product=self.plant)
+
+
+    def test_access_restriction_for_unauthenticated_user(self):
+        """Make sure that an unauthenticated user cannot access the endpoint."""
+
+        # MAKE a DELETE request to the delete-cart-item API endpoint
+        response = self.client.delete(self.url, {'plant_id': str(self.plant.id)})
+
+        # Assert the status code is 403 (Forbidden)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+    def test_cart_object_does_not_exist(self):
+        """
+        Make sure that the API endpoint correctly handles the case,
+        when the Cart object is not found.
+        """
+
+        # Login user to avoid access restrictions
+        self.client.force_authenticate(user=self.user)
+
+        # Make sure that the Cart object does not exist in the database
+        self.cart.delete() # Remove the Cart object
+
+        # Make a DELETE request to the delete-cart-item API endpoint
+        response = self.client.delete(self.url, {'plant_id': str(self.plant.id)})
+
+        # Assert the status code is 404 (Not Found)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+    def test_plant_object_does_not_exist(self):
+        """
+        Make sure that the API endpoint correctly handles the case,
+        when the Cart object is not found.
+        """
+
+        # Login user to avoid access restrictions
+        self.client.force_authenticate(user=self.user)
+
+        # Get the Plant object id before deleting it
+        plant_id = self.plant.id
+
+        # Make sure that the Plant object does not exist in the database
+        self.plant.delete() # Delete the Plant object
+
+        # Make a DELETE request to the API endpoint.
+        response = self.client(self.url, {'plant_id': str(plant_id)})
+
+        # Assert the status code is 404 (Not Found)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+    def test_cart_item_does_not_exist(self):
+        """
+        Make sure that the API endpoint correctly handles the case,
+        when the CartItem object is not found.
+        """
+
+        # Login user to avoid access restrictions
+        self.client.force_authenticate(user=self.user)
+
+        # Make sure that the CartItem object does not exist in the database
+        self.cart_item.delete() # Delete the CartItem object
+
+        # Make a DELETE request to the API endpoint
+        response = self.client.delete(self.url, {'plant_id': str(self.plant.id)})
+
+        # Assert the status code is 404 (Not Found)
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+    def test_successful_deletion_of_cart_item(self):
+        """Test successful deletion of the CartItem object."""
+
+        # Login user to avoid access restrictions
+        self.client.force_authenticate(user=self.user)
+
+        # Make a DELETE request to the API endpoint
+        response = self.client.delete(self.url, {'plant_id': str(self.plant.id)})
+
+        # Assert the status code is 204 (No Content)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
