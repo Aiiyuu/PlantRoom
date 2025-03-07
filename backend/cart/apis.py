@@ -92,20 +92,88 @@ class DeleteCartItemAPI(APIView):
      authentication_classes = [SessionAuthentication]
      permission_classes = [IsAuthenticated]
 
-     def delete(self, request, *args, **kwargs):
+     def delete(self, request, id, *args, **kwargs):
          """Delete a CartItem from the user's cart"""
 
-         # Retrieve the Cart object from the database, or return 404 if it is not found
+         # Retrieve the Cart object from the database or return 404 if it is not found
          cart = get_object_or_404(Cart, user=request.user)
 
          # Retrieve the Plant object from the database or return 404 if it's not found
-         plant = get_object_or_404(Plant, id=request.data.get('plant_id'))
+         plant = get_object_or_404(Plant, id=id)
 
          # Retrieve the CartItem object
          cart_item = get_object_or_404(CartItem, cart=cart, product=plant)
-
 
          cart_item.delete() # Delete the CartItem from the database
 
          return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class IncreaseQuantityAPI(APIView):
+    """
+    The IncreaseQuantityAPI handles a PATCH request that increases
+    the quantity of a CartItem object by 1.
+
+    This API endpoint allows authenticated users to increase the quantity
+    of an object by one. It requires them to provide the product ID.
+    """
+
+    # Restriction access for unauthenticated users
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, id, *args, **kwargs):
+        """Increase the quantity of the CartItem object by one."""
+
+        # Retrieve the Cart object from the database or return 404 if it is not found
+        cart = get_object_or_404(Cart, user=request.user)
+
+        # Retrieve the Plant object from the database or return 404 if it's not found
+        plant = get_object_or_404(Plant, id=id)
+
+        # Retrieve the CartItem object
+        cart_item = get_object_or_404(CartItem, cart=cart, product=plant)
+
+        cart_item.quantity += 1 # Increase the amount
+        cart_item.save() # Save to the database
+
+        return Response(status=status.HTTP_200_OK)
+
+
+
+class DecreaseQuantityAPI(APIView):
+    """
+    The DecreaseQuantityAPI handles a PATCH request that decreases
+    the quantity of a CartItem object by 1.
+
+    This API endpoint allows authenticated users to decrease the quantity
+    of an object by one. It requires them to provide the product ID. If the
+    quantity is equal to 1, the CartItem will be deleted.
+    """
+
+    # Restriction access for unauthenticated users
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, id, *args, **kwargs):
+        """Decrease the quantity of the CartItem object by one."""
+
+        # Retrieve the Cart object from the database or return 404 if it is not found
+        cart = get_object_or_404(Cart, user=request.user)
+
+        # Retrieve the Plant object from the database or return 404 if it's not found
+        plant = get_object_or_404(Plant, id=id)
+
+        # Retrieve the CartItem object
+        cart_item = get_object_or_404(CartItem, cart=cart, product=plant)
+
+        # Check if the quantity is equal to 1
+        if cart_item.quantity == 1:
+            # Delete the CartItem if the if statement returns True.
+            cart_item.delete() # Delete the object
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        cart_item.quantity -= 1 # Decrease the amount
+        cart_item.save() # Save to the database
+
+        return Response(status=status.HTTP_200_OK)
