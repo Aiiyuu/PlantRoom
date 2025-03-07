@@ -78,10 +78,11 @@ class CartItem(models.Model):
             raise ValidationError('The quantity field cannot be negative.')
         
         
-        # Ensure that a product is only added once to the cart
-        # If the product already exists in the cart, update the quantidy instead
-        if CartItem.objects.filter(cart=self.cart, product=self.product).exists():
-            raise ValidationError('The product is already in your cart.')
+        # Only raise an error if we're creating a new CartItem, not updating quantity
+        if self.pk is None:  # Only perform this check for new items (not when updating quantity)
+            # Ensure that the same product is not added twice to the cart
+            if CartItem.objects.filter(cart=self.cart, product=self.product).exists():
+                raise ValidationError('The product is already in your cart.')
         
     
     def save(self, *args, **kwargs):
