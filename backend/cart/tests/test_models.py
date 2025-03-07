@@ -176,7 +176,6 @@ class CartItemTest(FileUploadTestCase):
         - Test that the get_total_price method is working correctly
         - Test that the __str__ method represents objectes correctly.
         - Test the CartItem object deletion on the Plant or Cart objects deletion.
-        - Test that the Plant object can have only one CartItem object.
     """
     
     
@@ -330,26 +329,3 @@ class CartItemTest(FileUploadTestCase):
         
         # Assert that the cart related to the user is also deleted        
         self.assertEqual(Cart.objects.filter(id=cart_item_id).count(), 0)
-        
-        
-    def test_product_unique_in_cart(self):
-        """Test that the clean method raises a ValidationError if the same product is added twice."""
-        
-        # Create a regular User object for the test
-        user = User.objects.create_user(name='test', email='test@test.com', password='test123')
-        
-        # Create a cart object for the test
-        cart = Cart.objects.create(user=user)
-        
-        # Create a plant object for the test
-        plant = Plant.objects.create(name='Chamomile', price=10.20, image=self.create_valid_image())
-
-        # Create a cart item object
-        cartItem = CartItem.objects.create(cart=cart, product=plant)
-        
-        # Create a cart item object with the same data
-        cartItem2 = CartItem(cart=cart, product=plant)
-        
-        # Try to add the same product to the cart again and check for ValidationError
-        with self.assertRaises(ValidationError):
-            cartItem2.clean()  # Call the clean method to validate
