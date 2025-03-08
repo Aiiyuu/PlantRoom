@@ -20,11 +20,11 @@ class PlantModelTest(FileUploadTestCase):
     - Test plant creation.
     - Test that the UUID is generated automatically.
     - Test that the UUID is unique.
-    - Test that the UUID is consistant on save.
+    - Test that the UUID is consistent on save.
     - Test invalid name length.
     - Test that leading and trailing spaces are stripped
     - Test invalid description.
-    - Test negatve and longer than 10 digits price.
+    - Test negative and longer than 10 digits price.
     - Test negative stock_count.
     - Test invalid discount_percentage field.
     - Test invalid image format.
@@ -158,7 +158,7 @@ class PlantModelTest(FileUploadTestCase):
         )
         
         
-        plant.clean() # Call the clean method, which should stip all the leading/trailing spaces
+        plant.clean() # Call the clean method, which should strip all the leading/trailing spaces
         
         self.assertEqual(plant.name, 'Rosa') # Ensure that the spaces have been removed
         
