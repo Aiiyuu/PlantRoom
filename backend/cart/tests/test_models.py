@@ -29,7 +29,7 @@ class CartModelTest(FileUploadTestCase):
         - Test the related_name for the user field.
         - Test that the get_total method is working correctly.
         - Test that the get_items_count is working correctly.
-        - Test that the __str__ method represents objectes correctly.
+        - Test that the __str__ method represents objects correctly.
         - Test the cart deletion on user deletion.
         - Test that the user has only one cart.
     """
@@ -108,7 +108,7 @@ class CartModelTest(FileUploadTestCase):
         """Test the behavior of the related_name in the user field."""
         
         # Test that you can get cart by the user model instance
-        self.assertTrue(self.test_user1.cart)
+        self.assertTrue(self.test_user1.cart.all())
         
     
     def test_get_total(self):
