@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'account',
     'inventory',
     'cart',
+    'feedback',
     
     'corsheaders',
     'rest_framework',
