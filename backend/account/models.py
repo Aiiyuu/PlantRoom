@@ -92,6 +92,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Check if user is regular and return True or False."""
         
         return not self.is_staff and not self.is_superuser
+
+
+    def is_superuser(self):
+        """Returns True if the User object is a superuser."""
+        return self.is_staff and self.is_superuser
+
     
     def clean(self):
         """Validates user's name."""
