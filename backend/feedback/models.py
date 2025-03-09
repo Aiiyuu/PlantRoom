@@ -14,7 +14,7 @@ class Feedback(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedbacks')
     content = models.TextField(max_length=800)
     rating = models.PositiveIntegerField()
-    added_at = models.DateField(default=timezone.now)
+    added_at = models.DateTimeField(default=timezone.now)
 
 
     class Meta:
