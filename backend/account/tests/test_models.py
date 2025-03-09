@@ -52,7 +52,7 @@ class CustomUserManagerTests(TestCase):
         
         
     def test_creating_user_without_email_raises_value_error(self):
-        """Test if the creating a user withoud an email raises a value error."""
+        """Test if the creating a user without an email raises a value error."""
         
         with self.assertRaises(ValueError):
             
@@ -71,7 +71,7 @@ class UserModelTest(TestCase):
     
     - Ensure that the User objects is correctly displayed in a human-readable way (__str__ method).
     - Ensure that the 'is_regular_user' method works correctly.
-    - Ensure that the 'clean' method correctly validatates the user name.
+    - Ensure that the 'clean' method correctly validates the user name.
     - Ensure that the 'date_joined' field is set correctly
     """
     
@@ -105,7 +105,7 @@ class UserModelTest(TestCase):
         
     def test_clean_method(self):
         """Test if the 'clean' method correctly validates the user's name."""
-        
+
         # Create a user with the invalid name
         user = User(
             email='_test@test.com',
