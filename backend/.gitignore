@@ -1,0 +1,15 @@
+# IDE settings
+.idea/
+
+# macOS metadata
+*.DS_Store
+
+# Python bytecode
+**/__pycache__/
+**/*.pyc
+
+# Django/Media uploads
+backend/media/
+
+# Test outputs (optional, if you generate test logs/artifacts)
+*.log
