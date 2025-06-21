@@ -1,10 +1,18 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import { createPinia } from 'pinia'
 import router from './router'
-import store from './store'
 import axios from 'axios'
 
 // Import styles
-import './assets/scss/main.scss'
+import './assets/styles/tailwind.css'
 
-createApp(App).use(store).use(router).mount('#app')
+const app = createApp(App)
+
+// Create Pinia instance
+const pinia = createPinia()
+
+app.use(pinia)    // <-- register Pinia
+app.use(router)   // <-- register router
+
+app.mount('#app')
