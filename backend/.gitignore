@@ -1,15 +1,35 @@
-# IDE settings
+# macOS junk
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows junk
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux junk
+*~
+#*#
+.nfs*
+
+# IDEs and editors
 .idea/
+.vscode/
+*.swp
+*.swo
+*.bak
 
-# macOS metadata
-*.DS_Store
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
 
-# Python bytecode
-**/__pycache__/
-**/*.pyc
+# Node
+node_modules/
 
-# Django/Media uploads
-backend/media/
-
-# Test outputs (optional, if you generate test logs/artifacts)
+# Logs and env files
 *.log
+.env
