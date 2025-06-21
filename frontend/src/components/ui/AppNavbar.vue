@@ -22,18 +22,18 @@
 
         <HamburgerButton class="sm:hidden" @click="activateMenu($event)"/>
 
-        <div class="navbar__adaptation-block sm:hidden" ref="ADAPTATION_MENU">
-            <ul class="navbar__adaptation-block__menu-list">
-                <li class="navbar__adaptation-block__menu-list__item">
+        <div class="navbar__adaptive-block sm:hidden" ref="ADAPTIVE_MENU">
+            <ul class="navbar__adaptive-block__menu-list">
+                <li class="navbar__adaptive-block__menu-list__item">
                     <router-link>Home</router-link>
                 </li>
-                <li class="navbar__adaptation-block__menu-list__item">
+                <li class="navbar__adaptive-block__menu-list__item">
                     <router-link>Catalog</router-link>
                 </li>
-                <li class="navbar__adaptation-block__menu-list__item">
+                <li class="navbar__adaptive-block__menu-list__item">
                     <router-link>Gallery</router-link>
                 </li>
-                <li class="navbar__adaptation-block__menu-list__item">
+                <li class="navbar__adaptive-block__menu-list__item">
                     <router-link>Cart</router-link>
                 </li>
             </ul>
@@ -45,7 +45,7 @@
 import HamburgerButton from '@/components/ui/HamburgerButton.vue'
 import { ref } from 'vue'
 
-const ADAPTATION_MENU = ref(null)
+const ADAPTIVE_MENU = ref(null)
 
 /**
  * Toggles the 'active' class on the hamburger button when clicked.
@@ -58,11 +58,12 @@ const ADAPTATION_MENU = ref(null)
  * button was clicked.
  */
 function activateMenu(e: Event) {
-    e.currentTarget.classList.toggle('active')
+    if (!e.currentTarget) return
+    (e.currentTarget as HTMLElement).classList.toggle('active')
 
-    // Make sure the ADAPTATION_MENU exists (is not null)
-    if (!ADAPTATION_MENU.value) return
-    ADAPTATION_MENU.value.classList.toggle('active')
+    // Make sure the ADAPTIVE_MENU exists (is not null)
+    if (!ADAPTIVE_MENU.value) return
+    (ADAPTIVE_MENU.value as HTMLElement).classList.toggle('active')
 }
 </script>
 
@@ -116,8 +117,8 @@ function activateMenu(e: Event) {
         }
     }
 
-    // Adaptation menu
-    &__adaptation-block {
+    // adaptive menu
+    &__adaptive-block {
         height: calc(100vh - 3rem);
         @apply fixed top-12 right-0 w-screen bg-cream flex justify-center items-center
                translate-x-full ease-in-out duration-300;
