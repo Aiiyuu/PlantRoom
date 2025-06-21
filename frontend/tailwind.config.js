@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         cream: '#FFFDF6',
         dark: '#222831',
+        'peach-orange': '#FFBF78'
       },
       fontFamily: {
         outfit: ['Outfit', 'sans-serif'],
