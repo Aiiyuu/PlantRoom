@@ -1,12 +1,12 @@
 <template>
-    <div class="default-layout">
+    <div class="default-layout font-outfit">
         <AppNavbar />
 
-        <main>
+        <main class="max-w-[1728px] mx-auto">
             <slot />
         </main>
 
-        <AppFooter />
+        <AppFooter class="max-w-[1728px] mx-auto" />
     </div>
 </template>
 
