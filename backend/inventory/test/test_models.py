@@ -29,6 +29,7 @@ class PlantModelTest(FileUploadTestCase):
     - Test invalid discount_percentage field.
     - Test invalid image format.
     - Test image size limits.
+    - Test invalid rating handling
     - Test image upload path.
     - Test the get_discounted_price method.
     - Test the in_stock property.
@@ -267,6 +268,34 @@ class PlantModelTest(FileUploadTestCase):
         )
         
         # Check that the clean method raises a ValidationError for the image field
+        with self.assertRaises(ValidationError):
+            plant.clean()
+
+
+    def test_invalid_rating_handling(self):
+        """Ensure that a Plant object cannot be saved if the rating is negative or greater than 5"""
+
+        # Create a new Plant object that has an incorrect rating
+        plant = Plant(
+            name='Verdant Nest',
+            price=14.30,
+            image=self.create_valid_image(),
+            rating=-4 # Specify an invalid rating
+        )
+
+        # Check that the clean method raises a ValidationError for the rating field
+        with self.assertRaises(ValidationError):
+            plant.clean()
+
+        # Create a new Plant object that has an incorrect rating
+        plant = Plant(
+            name='Verdant Nest',
+            price=14.30,
+            image=self.create_valid_image(),
+            rating=-4 # Specify an invalid rating
+        )
+
+        # Check that the clean method raises a ValidationError for the rating field
         with self.assertRaises(ValidationError):
             plant.clean()
         
