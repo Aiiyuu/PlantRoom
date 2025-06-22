@@ -18,6 +18,7 @@ class Plant(models.Model):
     discount_percentage = models.PositiveIntegerField(default=0)
     stock_count = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='plants/', blank=False, null=False)
+    rating = models.PositiveIntegerField(default=0)
     
     
     class Meta:
@@ -34,6 +35,11 @@ class Plant(models.Model):
             
             # Optional: Ensure stock_count is always greater than or equal to 0
             models.CheckConstraint(check=models.Q(stock_count__gte=0), name='valid_stock_count'),
+
+            models.CheckConstraint(
+                check = models.Q(rating__gte=0, rating__lte=5), # Rating must be between 0 and 5 (inclusive)
+                name = 'inventory_rating_between_0_and_5'
+            )
         ]
     
     
@@ -98,6 +104,10 @@ class Plant(models.Model):
         # Check if the image field size does not exceed the maximum allowed size
         if self.image.size > max_size:
             raise ValidationError(f'The image field file cannot exceed {max_size / 1024 / 1024}MB.')
+
+        # Make sure that the rating field is positive and less than or equal to five.
+        if self.rating < 0 or self.rating > 5:
+            raise ValidationError('The rating field must be between 0 and 5 (inclusive)')
     
     
     def save(self, *args, **kwargs):
