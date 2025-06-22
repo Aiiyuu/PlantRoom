@@ -68,15 +68,15 @@ import BaseButton from "@/components/ui/BaseButton.vue"
     }
 
     &__gear-decoration {
-        @apply absolute bottom-0 right-0 w-64 h-64 translate-x-1/4 scale-150  translate-y-1/2
+        @apply absolute bottom-0 right-0 w-52 h-52 translate-x-1/4 scale-150  translate-y-1/2
             hidden md:block;
 
         span {
-            @apply relative block w-64 h-64 border-[25px] border-solid border-peach-orange rounded-full;
+            @apply relative block w-52 h-52 border-[20px] border-solid border-peach-orange rounded-full;
 
             &::before {
                 content: "";
-                @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 border-[20px] border-solid
+                @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 border-[15px] border-solid
                     border-pale-yellow rounded-full;
             }
         }
