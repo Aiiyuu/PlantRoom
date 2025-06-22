@@ -21,7 +21,7 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import PlantCard from '@/components/ui/PlantCard.vue'
 import Plant from '@/types/PlantInterface'
-import { defineComponent, provide } from "vue"
+import { provide } from "vue"
 
 // Mocked base URL from app's global configuration
 const mockImageBaseUrl = 'http://127.0.0.1:8000/'
