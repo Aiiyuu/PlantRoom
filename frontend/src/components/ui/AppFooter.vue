@@ -32,7 +32,7 @@
                     <h1 class="footer__sub-block__navigation__block_title">Navigation</h1>
                     <ul class="footer__sub-block__navigation__block__list">
                         <li class="footer__sub-block__navigation__block__list__item">
-                            <a href="#header">Home</a>
+                            <a href="#home">Home</a>
                         </li>
                         <li class="footer__sub-block__navigation__block__list__item">
                             <a href="#about-us">About us</a>
@@ -173,7 +173,11 @@
         }
 
         &:nth-child(3) {
-            @apply col-span-12 md:col-span-6 bg-dark text-cream;
+            @apply col-span-12 md:col-span-6 bg-dark;
+
+            * {
+                @apply text-cream;
+            }
         }
     }
 }
