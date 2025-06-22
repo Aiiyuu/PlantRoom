@@ -87,6 +87,8 @@ class PlantDetailAPITest(FileUploadTestCase):
     
     - Verify that the API returns data from the database
     - Test the behavior when there is no data in the database
+    - Verify that the in_stock field is correct.
+    - Verify that the discounted price is calculated correctly.
     """
     
     def setUp(self):
@@ -98,7 +100,13 @@ class PlantDetailAPITest(FileUploadTestCase):
         
         
         # Create a few Plant objects
-        self.plant_1 = Plant.objects.create(name='Rosa', price=15.00, image=self.create_valid_image())
+        self.plant_1 = Plant.objects.create(
+            name='Rosa',
+            price=15.00,
+            image=self.create_valid_image(),
+            discount_percentage=10
+        )
+
         self.plant_2 = Plant.objects.create(name='Violet', price=12.50, image=self.create_valid_image())
         
         
@@ -131,4 +139,39 @@ class PlantDetailAPITest(FileUploadTestCase):
         
         # Assert the status code is 404 (Not Found)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        
+
+
+    def test_in_stock_field(self):
+        """Make sure that the in_stock field is correct"""
+
+        # Create a plant object with a stock_count greater than 0
+        plantObj_1 = Plant.objects.create(
+            name='Rosa',
+            price=13.50,
+            image=self.create_valid_image(),
+            stock_count=50 # The in_stock field should be true
+        )
+
+        # Make a GET request to the plant detail API endpoint with the plant's UUID
+        response = self.client.get(reverse('plant-detail', args=[plantObj_1.id]))
+        self.assertTrue(response.data['in_stock'])
+
+        # Create a plant object with a stock_count equal to 0
+        plantObj_2 = Plant.objects.create(
+            name='Violet',
+            price=15.30,
+            image=self.create_valid_image(),
+            stock_count=0 # The in_stock field should be false
+        )
+
+        # Make a GET request to the plant detail API endpoint with the plant's UUID
+        response = self.client.get(reverse('plant-detail', args=[plantObj_2.id]))
+        self.assertFalse(response.data['in_stock'])
+
+
+    def test_discounted_price_field(self):
+        """Make sure that the discounted_price field is calculated correctly"""
+
+        # Make a GET request to the plant detail API endpoint with the plant's UUID
+        response = self.client.get(reverse('plant-detail', args=[self.plant_1.id]))
+        self.assertEqual(response.data['discounted_price'], 13.5) # 15.00 - 10% = 13.5
