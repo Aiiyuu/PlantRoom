@@ -67,8 +67,8 @@ const selectedSorting = ref('featured')
 function selectSorting(method: string) {
     selectedSorting.value = method
 
-// Update the inventory sorting method based on the selected sorting option
-    inventoryStore.updateSortMethod(selectedSorting.value)
+    // Update the inventory sorting method based on the selected sorting option
+    inventoryStore.updateSortMethod(method)
 }
 
 onMounted(() => {
