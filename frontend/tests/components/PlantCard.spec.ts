@@ -167,6 +167,8 @@ describe('PlantCard.vue', (): void => {
             description: 'A hardy, drought-tolerant plant that thrives in arid environments.',
             price: 15.00,
             stock_count: 50,
+            discount_percentage: 0,
+            discounted_price: null,
             in_stock: true,
             rating: 4,
             image: 'cactus.jpg',

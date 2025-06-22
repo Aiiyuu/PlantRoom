@@ -9,7 +9,7 @@ export default interface Plant {
     description: string,
     price: number,
     discount_percentage: number,
-    discounted_price: number,
+    discounted_price: number | null,
     stock_count: number,
     in_stock: boolean,
     rating: number,
