@@ -1,5 +1,5 @@
 <template>
-    <div class="trending-products">
+    <div class="trending-products" id="trending-products">
         <h1 class="trending-products__title">Trending Products</h1>
 
         <div class="trending-products__sorting-bar">

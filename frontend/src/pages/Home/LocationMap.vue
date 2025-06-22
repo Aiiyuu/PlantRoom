@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="location">
         <!-- Spinner -->
         <div class="w-full h-[450px] flex justify-center items-center" v-if="isLoading">
             <LoadingSpinner />
