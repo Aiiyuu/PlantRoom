@@ -8,12 +8,12 @@ export interface Plant {
     description: string,
     price: number,
     discount_percentage: number,
+    discounted_price: number,
     stock_count: number,
+    in_stock: boolean,
     rating: number,
     image: string,
 }
-
-// Discounted price and isInstock
 
 export const useInventoryStore = defineStore('inventory', {
     state: () => ({
