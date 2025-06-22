@@ -2,7 +2,7 @@ from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
 
-from inventory.tests.base_test import FileUploadTestCase
+from inventory.test.base_test import FileUploadTestCase
 
 from account.models import User
 from inventory.models import Plant
