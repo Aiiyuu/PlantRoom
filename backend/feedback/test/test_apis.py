@@ -361,4 +361,4 @@ class CreateFeedbackAPI(APITestCase):
         self.assertIn('The content field must include between 20 and 800 characters.', response.data['errors']['__all__'])
 
         # Check for rating validation error in the __all__ field
-        self.assertIn('Constraint “rating_between_0_and_5” is violated.', response.data['errors']['__all__'])
+        self.assertIn('Constraint “feedback_rating_between_0_and_5” is violated.', response.data['errors']['__all__'])
