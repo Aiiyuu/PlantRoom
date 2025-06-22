@@ -1,19 +1,7 @@
 
 import { defineStore } from 'pinia'
+import Plant from '@/types/PlantInterface'
 import axios, { AxiosResponse } from 'axios'
-
-export interface Plant {
-    id:number,
-    name: string,
-    description: string,
-    price: number,
-    discount_percentage: number,
-    discounted_price: number,
-    stock_count: number,
-    in_stock: boolean,
-    rating: number,
-    image: string,
-}
 
 export const useInventoryStore = defineStore('inventory', {
     state: () => ({
