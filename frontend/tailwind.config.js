@@ -7,8 +7,9 @@ module.exports = {
     extend: {
       colors: {
         cream: '#FFFDF6',
+        'pale-yellow': '#FFEEA9',
+        'peach-orange': '#FFBF78',
         dark: '#222831',
-        'peach-orange': '#FFBF78'
       },
       fontFamily: {
         outfit: ['Outfit', 'sans-serif'],
