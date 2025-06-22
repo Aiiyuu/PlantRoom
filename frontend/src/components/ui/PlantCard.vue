@@ -15,7 +15,11 @@
 
         <h2 class="card__name">{{ plant.name }}</h2>
         <div class="card__price">
-            <span class="">${{ plant.price }}</span>
+            <span v-if="!plant.discount_percentage" >${{ plant.price }}</span>
+            <div v-else>
+                <span>${{ plant.discounted_price }}</span>
+                <span class="line-through ml-2">${{ plant.price }}</span>
+            </div>
         </div>
     </div>
 </template>
