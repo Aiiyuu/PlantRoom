@@ -40,8 +40,8 @@ class PlantListAPITest(FileUploadTestCase):
         
         # Create a few Plant objects
         Plant.objects.create(name='Rosa', price=12.50, image=self.image)
-        Plant.objects.create(name='Violet', price=10.00, image=self.image)
-        Plant.objects.create(name='Chamomile', price=52.10, image=self.image)
+        Plant.objects.create(name='Violet', price=10.00, rating=4, image=self.image)
+        Plant.objects.create(name='Chamomile', price=52.10, rating=5, image=self.image)
     
     
     def test_get_plants_success(self):
@@ -114,6 +114,7 @@ class PlantDetailAPITest(FileUploadTestCase):
         
         # Verify the plant data returned matches the expected data
         self.assertEqual(response.data['name'], self.plant_2.name)
+        self.assertEqual(response.data['rating'], self.plant_2.rating)
         self.assertAlmostEqual(float(response.data['price']), self.plant_2.price)
         self.assertEqual(response.data['image'], '/media/' + self.plant_2.image.name)
         
@@ -121,7 +122,7 @@ class PlantDetailAPITest(FileUploadTestCase):
     def test_plant_detail_not_found(self):
         """Test that the PlantDetailAPI returns a 404 when the plant is not found."""
         
-        # Generate a randomo UUID that does not exist in the database
+        # Generate a random UUID that does not exist in the database
         non_existent_uuid = uuid.uuid4()
         
         # Make a GET request to the plant detail endpoint with the non-existent UUID

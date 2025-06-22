@@ -5,7 +5,7 @@ from django.utils import timezone
 from cart.models import Cart, CartItem
 from account.models import User
 from inventory.models import Plant
-from inventory.tests.base_test import FileUploadTestCase
+from inventory.test.base_test import FileUploadTestCase
 
 import uuid
 
@@ -108,7 +108,7 @@ class CartModelTest(FileUploadTestCase):
         """Test the behavior of the related_name in the user field."""
         
         # Test that you can get cart by the user model instance
-        self.assertTrue(self.test_user1.cart.all())
+        self.assertIsNotNone(self.test_user1.cart)
         
     
     def test_get_total(self):

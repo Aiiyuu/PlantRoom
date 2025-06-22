@@ -21,7 +21,7 @@ class Feedback(models.Model):
         constraints = [
             models.CheckConstraint(
                 check = models.Q(rating__gte=0, rating__lte=5), # Rating must be between 0 and 5 (inclusive)
-                name = 'rating_between_0_and_5'
+                name = 'feedback_rating_between_0_and_5'
             )
         ]
 
