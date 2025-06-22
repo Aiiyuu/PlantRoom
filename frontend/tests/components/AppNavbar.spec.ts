@@ -9,7 +9,7 @@ import { describe, it, expect } from "vitest";
 import { mount } from "@vue/test-utils";
 import AppNavbar from "@/components/ui/AppNavbar.vue";
 
-describe("AppNavbar", (): void => {
+describe("AppNavbar.vue", (): void => {
     // ----------- Render Tests -----------
     it("renders without crashing", (): void => {
         const wrapper = mount(AppNavbar, {
