@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar flex justify-between items-center">
-        <router-link class="flex" to="/">
+        <router-link class="flex items-center" to="/">
             <img src="@/assets/icons/logo-icon.svg" alt="">
             <h1 class="navbar__logo">PlantRoom</h1>
         </router-link>
@@ -77,7 +77,7 @@ function activateMenu(e: Event) {
 
     &__menu-list {
         &__item {
-            @apply font-medium mr-10 relative;
+            @apply font-medium mr-10 relative text-sm;
 
             &:last-child {
                 @apply mr-0;
