@@ -6,11 +6,14 @@
 
         <div class="card__rating">
             <!-- Loop through 5 stars -->
-            <img
+            <span
                 v-for="i in 5"
                 :key="i"
-                :src="i <= plant.rating ? require('@/assets/icons/star.svg') : require('@/assets/icons/star-disabled.svg')"
-            />
+                :class="[
+                    'star',
+                    i <= plant.rating ? 'star--active' : 'star--inactive'
+                ]"
+            ></span>
         </div>
 
         <h2 class="card__name">{{ plant.name }}</h2>
@@ -26,7 +29,7 @@
 
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
-import Plant from '@/store/inventoryStore'
+import Plant from '@/types/PlantInterface'
 
 // Define props
 const props = defineProps<{
@@ -58,12 +61,17 @@ const fullImageUrl = computed(() => {
     &__rating {
         @apply flex justify-center items-center;
 
-        img {
-            @apply mr-3;
+        .star {
+            @apply w-5 h-5 bg-no-repeat bg-center inline-block mr-2;
+            background-image: url('@/assets/icons/star.svg');
 
             &:last-child {
                 @apply mr-0;
             }
+        }
+
+        .star--inactive {
+            background-image: url('@/assets/icons/star-disabled.svg');
         }
     }
 
