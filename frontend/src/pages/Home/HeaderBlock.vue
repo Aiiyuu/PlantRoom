@@ -1,5 +1,5 @@
 <template>
-    <div class="header">
+    <div class="header" id="home">
         <div class="header__decoration">
             <img src="@/assets/images/header-decoration.svg" alt="">
         </div>
@@ -15,7 +15,6 @@
             <BaseButton
                 class="header__content__button"
                 text="Shop now"
-                size="sm"
                 color="#FFBF78"
                 textColor="#FFFDF6"
                 rotate="0deg"
