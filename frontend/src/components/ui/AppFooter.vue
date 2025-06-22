@@ -47,7 +47,7 @@
                             <a href="#feedbacks">Feedbacks</a>
                         </li>
                         <li class="footer__sub-block__navigation__block__list__item">
-                            <a href="#locations">Locations</a>
+                            <a href="#location">Locations</a>
                         </li>
                     </ul>
                 </div>
