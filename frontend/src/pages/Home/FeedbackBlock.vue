@@ -21,7 +21,7 @@
         </div>
 
         <div v-else>
-            <h1>No feedback available</h1>
+            <h1>No feedbacks available</h1>
         </div>
     </div>
 </template>
@@ -30,13 +30,16 @@
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useFeedbackStore } from "@/store/feedbackStore"
 import FeedbackCard from "@/components/ui/FeedbackCard.vue"
+import Feedback from '@/types/FeedbackInterface'
 
 const feedbackStore = useFeedbackStore();
-const duplicatedFeedbacks = ref([]) // It is used for auto scroll carousel
+const duplicatedFeedbacks = ref<Feedback[]>([]) // It is used for auto scroll carousel
 
 onMounted(() => {
     // Fetch date from the feedback API endpoint
-    feedbackStore.fetchFeedbacks().then(() => duplicatedFeedbacks.value = [ ...feedbackStore.feedbacks, ...feedbackStore.feedbacks ])
+    feedbackStore.fetchFeedbacks().then(() => {
+        duplicatedFeedbacks.value = [...feedbackStore.feedbacks, ...feedbackStore.feedbacks];
+    })
 
 })
 </script>
