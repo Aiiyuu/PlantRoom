@@ -2,7 +2,7 @@
     <div class="trending-products">
         <h1 class="trending-products__title">Trending Products</h1>
 
-        <div class="trending-products__sorting-bar">
+        <div v-if="inventoryStore.inventory?.length" class="trending-products__sorting-bar">
             <span
                 class="trending-products__sorting-bar__item"
                 v-for="method in sortingMethods"
@@ -17,7 +17,7 @@
             </span>
         </div>
 
-        <div class="trending-products__carousel" ref="carouselWindow">
+        <div v-if="inventoryStore.inventory?.length" class="trending-products__carousel" ref="carouselWindow">
             <div class="trending-products__carousel__inner" ref="carouselInner">
                 <PlantCard
                     class="trending-products__carousel__inner__item"
@@ -43,6 +43,9 @@
                     <img class="rotate-180" src="@/assets/icons/arrow.svg" alt="">
                 </button>
             </div>
+        </div>
+        <div v-else>
+            <h1>No plants available</h1>
         </div>
     </div>
 </template>
