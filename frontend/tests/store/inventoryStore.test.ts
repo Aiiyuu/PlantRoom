@@ -93,7 +93,7 @@ describe('InventoryStore', () => {
         // Set mock implementation
         mockedAxios.default.mockResolvedValue({ data: mockPlants })
 
-        // Now call your store method
+        // Now call fetch method
         await store.fetchInventory()
 
         // Assert expected results
