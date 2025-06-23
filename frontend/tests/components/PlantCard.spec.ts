@@ -12,6 +12,7 @@
  * 2. Correct rendering of the discount and original price.
  * 3. Rendering the correct number of filled and empty stars based on the plant's rating.
  * 4. Handling cases where no discount is applied.
+ * 5. Correct rendering of the loading skeleton
  *
  * The tests use mocked data to simulate different plant details and validate that the component
  * displays the expected content.
@@ -70,7 +71,6 @@ describe('PlantCard.vue', (): void => {
         expect(wrapper.find('img').attributes('src')).toBe(`${mockImageBaseUrl}aloe-vera.jpg`)
     })
 
-
     // ----------- Rendering of the price and discount price tests -----------
     it('renders the price and discount price correctly', (): void => {
         // Create a plant object
@@ -108,7 +108,6 @@ describe('PlantCard.vue', (): void => {
         // Expect the original price to have a strikethrough
         expect(wrapper.find('.card__price .line-through').text()).toBe('$50');
     })
-
 
     // ----------- Rendering the correct number of filled and empty stars tests -----------
     it ('renders the correct number of filled and empty starts', (): void => {
@@ -157,7 +156,6 @@ describe('PlantCard.vue', (): void => {
         expect(stars[4].classes()).toContain('star--inactive')
     })
 
-
     // ----------- Rendering the case when no discount is applied correctly -----------
     it('renders correctly when no discount is applied', (): void => {
         // Create a plant object
@@ -194,4 +192,51 @@ describe('PlantCard.vue', (): void => {
         expect(wrapper.find('.card__price .line-through').exists()).toBe(false);
     })
 
+    // ----------- Rendering loading skeleton -----------
+    it('renders loading skeletons and not the actual content when isLoading is true', () => {
+        // Create a minimal plant object (content won't be shown, but needed for prop type)
+        const plant: Plant = {
+            id: 5,
+            name: 'Test Plant',
+            description: 'Test description',
+            price: 10,
+            discount_percentage: 0,
+            discounted_price: null,
+            stock_count: 10,
+            in_stock: true,
+            rating: 3,
+            image: 'test.jpg',
+        }
+
+        // Mount the plantCard component for testing
+        const wrapper = mount(PlantCard, {
+            // Provide props to component
+            props: {
+                plant,
+                isLoading: true,
+            },
+            global: {
+                // Apply global dependencies
+                provide: {
+                    $imageBaseUrl: mockImageBaseUrl,
+                },
+            },
+        })
+
+        // Check that the card container has the loading class
+        expect(wrapper.find('.card').classes()).toContain('loading');
+
+        // Check that no img tag is rendered (image is hidden in loading)
+        expect(wrapper.find('img').exists()).toBe(false);
+
+        // Check that the skeleton divs for image, rating, name, price exist
+        expect(wrapper.find('.card__image.loading').exists()).toBe(true);
+        expect(wrapper.find('.card__rating.loading').exists()).toBe(true);
+        expect(wrapper.findAll('.card__name div.loading')[0].exists()).toBe(true);
+        expect(wrapper.findAll('.card__name div.loading')[1].exists()).toBe(true);
+        expect(wrapper.find('.card__price.loading').exists()).toBe(true);
+
+        // Actual content (like plant name) should NOT be visible
+        expect(wrapper.find('.card__name').text()).not.toBe('Test Plant');
+    })
 })

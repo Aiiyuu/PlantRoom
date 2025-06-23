@@ -13,7 +13,8 @@
  * 3. Checking that the store's `updateSortMethod` is called when the sorting method is changed.
  * 4. Testing the carousel's navigation functionality (scrolling to the next and previous items).
  * 5. Verifying that `PlantCard` components are rendered for each item in the inventory.
- * 6. Verify that a "no items" message is displayed when the inventory is empty and loading is false. *
+ * 6. Verify that a "no items" message is displayed when the inventory is empty and loading is false.
+ * 7. Verify correct rendering of the loading skeleton
  *
  * The tests use mocked store data to simulate different inventory and loading states, and validate that the component
  * behaves as expected in these scenarios.
@@ -69,6 +70,7 @@ describe('TrendingProductsBlock.vue', (): void => {
 
         // Make sure the inventory state is not empty
         store.inventory = [ ...mockPlants ]
+        store.isLoading = false
 
         // Wait for Vue to update
         await wrapper.vm.$nextTick()
@@ -94,6 +96,7 @@ describe('TrendingProductsBlock.vue', (): void => {
 
         // Make sure the inventory state is not empty
         store.inventory = [ ...mockPlants ]
+        store.isLoading = false
 
         // Wait for Vue to update
         await wrapper.vm.$nextTick()
@@ -117,6 +120,7 @@ describe('TrendingProductsBlock.vue', (): void => {
 
         // Make sure the inventory state is not empty
         store.inventory = [ ...mockPlants ]
+        store.isLoading = false
 
         // Wait for Vue to update
         await wrapper.vm.$nextTick()
@@ -158,6 +162,7 @@ describe('TrendingProductsBlock.vue', (): void => {
             rating: 4.5,
             image: `/images/plant${i + 1}.jpg`,
         }))
+        store.isLoading = false
 
         await wrapper.vm.$nextTick()
 
@@ -246,5 +251,37 @@ describe('TrendingProductsBlock.vue', (): void => {
         // Check that the carousel is not displayed (v-if="inventoryStore.inventory?.length")
         const carousel = wrapper.find('.trending-products__carousel');
         expect(carousel.exists()).toBe(false);
-    });
+    })
+
+    // ----------- Rendering loading skeleton -----------
+    it('renders loading skeletons', async () => {
+        // Mount the TrendingProductsBlock component fot testing
+        const wrapper = mount(TrendingProductsBlock)
+        const store = useInventoryStore()
+
+        // Mock inventory with 5 items
+        store.inventory = Array.from({ length: 5 }, (_, i) => ({
+            id: i + 1,
+            name: `Plant ${i + 1}`,
+            description: `Description for Plant ${i + 1}`,
+            price: 10 + i,
+            discount_percentage: 0,
+            discounted_price: null,
+            stock_count: 5,
+            in_stock: true,
+            rating: 4.5,
+            image: `/images/plant${i + 1}.jpg`,
+        }))
+
+        // Set isLoading to true
+        store.isLoading = true;
+
+        await wrapper.vm.$nextTick() // Wait until Vue re-renders the component
+
+        // Find all PlantCard components rendered
+        const plantCards = wrapper.findAllComponents(PlantCard)
+
+        // Assert the number of PlantCards equals inventory length
+        expect(plantCards).toHaveLength(store.inventory.length);
+    })
 })
