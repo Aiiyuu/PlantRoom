@@ -8,6 +8,8 @@
 
         <AdvantagesBlock />
 
+        <FeedbackBlock />
+
         <LocationMap />
     </div>
 </template>
@@ -18,4 +20,5 @@ import HeaderBlock from "@/pages/Home/HeaderBlock.vue"
 import AboutUsBlock from "@/pages/Home/AboutUsBlock.vue"
 import TrendingProductsBlock from "@/pages/Home/TrendingProductsBlock.vue"
 import AdvantagesBlock from "@/pages/Home/AdvantagesBlock.vue"
+import FeedbackBlock from "@/pages/Home/FeedbackBlock.vue"
 </script>
