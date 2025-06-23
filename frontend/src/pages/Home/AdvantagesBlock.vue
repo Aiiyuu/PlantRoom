@@ -7,7 +7,7 @@
         <div class="advantages-block__sub-block">
             <h1 class="advantages-block__sub-block__title">Find natural note</h1>
             <p class="advantages-block__sub-block__text">
-                AtPlantRoom, we’re all about making plant care simple, joyful, and stress-free. Enjoy free shipping on
+                At PlantRoom, we’re all about making plant care simple, joyful, and stress-free. Enjoy free shipping on
                 every order and shop with peace of mind thanks to our 14-day money-back guarantee. Our secure online
                 payments and flexible checkout options make your experience smooth from start to finish. Each plant
                 is hand-picked with care and thoughtfully packed to arrive fresh, healthy, and ready to thrive. And if
