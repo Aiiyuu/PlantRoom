@@ -4,7 +4,20 @@
             Our happy customers
         </h1>
 
-        <div v-if="feedbackStore.feedbacks?.length" class="feedback__list" ref="container">
+        <!-- Show loading skeleton when loading -->
+        <div v-if="feedbackStore.isLoading" class="feedback__list" ref="container">
+            <div class="feedback__list__track">
+                <FeedbackCard
+                    v-for="n in 5"
+                    :key="n"
+                    :is-loading="true"
+                    class="card"
+                />
+            </div>
+        </div>
+
+        <!-- Show feedbacks when loaded -->
+        <div v-else-if="feedbackStore.feedbacks?.length" class="feedback__list" ref="container">
             <div
                 class="feedback__list__track"
                 :style="{ transform: `translateX(-${offset}px)` }"
@@ -13,18 +26,20 @@
                 <FeedbackCard
                     v-for="(feedback, index) in duplicatedFeedbacks"
                     :feedback="feedback"
-                    :is-loading="feedbackStore.isLoading"
+                    :is-loading="false"
                     :key="index"
                     class="card"
                 />
             </div>
         </div>
 
+        <!-- No feedbacks message -->
         <div v-else>
             <h1>No feedbacks available</h1>
         </div>
     </div>
 </template>
+
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
