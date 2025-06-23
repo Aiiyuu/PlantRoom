@@ -2,7 +2,8 @@
     <div class="trending-products" id="trending-products">
         <h1 class="trending-products__title">Trending Products</h1>
 
-        <div v-if="inventoryStore.inventory?.length" class="trending-products__sorting-bar">
+        <!-- Sorting bar: only show if not loading and inventory has items -->
+        <div v-if="!inventoryStore.isLoading && inventoryStore.inventory?.length" class="trending-products__sorting-bar">
             <span
                 class="trending-products__sorting-bar__item"
                 v-for="method in sortingMethods"
@@ -12,43 +13,66 @@
                     :class="{ selected: selectedSorting === method }"
                     @click="selectSorting(method)"
                 >
-                    {{ method }}
+                  {{ method }}
                 </button>
             </span>
         </div>
 
-        <div v-if="inventoryStore.inventory?.length" class="trending-products__carousel" ref="carouselWindow">
+        <!-- Loading skeleton: show while loading -->
+        <div v-if="inventoryStore.isLoading" class="trending-products__carousel">
+            <div class="trending-products__carousel__inner">
+                <PlantCard
+                    v-for="n in 5"
+                    :key="n"
+                    class="trending-products__carousel__inner__item"
+                    :isLoading="true"
+                />
+            </div>
+        </div>
+
+        <!-- Actual carousel: show if not loading and inventory has items -->
+        <div
+            v-else-if="inventoryStore.inventory?.length"
+            class="trending-products__carousel"
+            ref="carouselWindow"
+        >
             <div class="trending-products__carousel__inner" ref="carouselInner">
                 <PlantCard
                     class="trending-products__carousel__inner__item"
                     v-for="item in inventoryStore.inventory"
                     :key="item.id"
                     :plant="item"
-                    :isLoading="inventoryStore.isLoading"
+                    :isLoading="false"
                 />
             </div>
 
             <div class="trending-products__carousel__navigation">
-                <button class="trending-products__carousel__navigation__item prev"
-                        @click="scrollCarousel('prev')"
+                <button
+                    class="trending-products__carousel__navigation__item prev"
+                    @click="scrollCarousel('prev')"
                 >
-                    <img src="@/assets/icons/arrow.svg" alt="">
+                    <img src="@/assets/icons/arrow.svg" alt="Previous" />
                     <span>Prev</span>
                 </button>
 
-                <button class="trending-products__carousel__navigation__item next"
-                        @click="scrollCarousel('next')"
+                <button
+                    class="trending-products__carousel__navigation__item next"
+                    @click="scrollCarousel('next')"
                 >
                     <span>Next</span>
-                    <img class="rotate-180" src="@/assets/icons/arrow.svg" alt="">
+                    <img class="rotate-180" src="@/assets/icons/arrow.svg" alt="Next" />
                 </button>
             </div>
         </div>
+
+        <!-- No data message -->
         <div v-else>
             <h1>No plants available</h1>
         </div>
     </div>
 </template>
+
+
 
 <script lang="ts" setup>
 import PlantCard from "@/components/ui/PlantCard.vue"
@@ -94,11 +118,11 @@ function scrollCarousel(direction: "prev" | "next") {
     if (!carouselInner.value && !carouselWindow.value) return;
 
     // Retrieves the first child of the carouselInner
-    const firstChild = carouselInner.value.firstElementChild;
+    const firstChild = carouselInner.value!.firstElementChild;
     if (!firstChild) return;
 
     // Get the number of child elements inside carouselInner
-    const numberOfChildren = carouselInner.value.children.length;
+    const numberOfChildren = carouselInner.value!.children.length;
 
     // Get the computed styles of the first child
     const styles = window.getComputedStyle(firstChild);
@@ -108,7 +132,7 @@ function scrollCarousel(direction: "prev" | "next") {
     const marginRight = parseFloat(styles.marginRight); // Converts margin-right to a float
 
     // Calculate the number of cards visible on the screen based on window width
-    const visibleCards = Math.floor(carouselWindow.value.offsetWidth / (width + marginRight));
+    const visibleCards = Math.floor(carouselWindow.value!.offsetWidth / (width + marginRight));
 
     // Calculate the number of cards that will be scrolled per "next" or "prev" action
     const cardsToScroll = 1;
@@ -123,7 +147,7 @@ function scrollCarousel(direction: "prev" | "next") {
     }
 
     // Update carousel position by adjusting translation
-    carouselInner.value.style.transform = `translateX(-${(width + marginRight) * carouselCurrentIndex}px)`;
+    carouselInner.value!.style.transform = `translateX(-${(width + marginRight) * carouselCurrentIndex}px)`;
 }
 
 </script>
