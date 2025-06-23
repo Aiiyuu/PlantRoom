@@ -16,28 +16,42 @@ body {
     cursor: wait;
 }
 
-.loading.bg-dark-cream {
+.loading.bg-dark-cream,
+.loading.bg-cream {
     position: relative; /* needed for the pseudo-element */
     overflow: hidden; /* hide the shimmer overflow */
 }
 
-.loading.bg-dark-cream::before {
+.loading.bg-dark-cream::before,
+.loading.bg-cream::before {
     content: "";
     position: absolute;
     top: 0;
     left: -50%;
     width: 50%;
     height: 100%;
+    filter: blur(8px);
+    animation: shimmer 2s linear infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.loading.bg-dark-cream::before {
     background: linear-gradient(
             90deg,
             transparent,
             rgba(255, 255, 255, 0.6),
             transparent
     );
-    filter: blur(8px);
-    animation: shimmer 2s linear infinite;
-    pointer-events: none;
-    z-index: 2;
+}
+
+.loading.bg-cream::before {
+    background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(232, 232, 232, 0.8),
+            transparent
+    );
 }
 
 @keyframes shimmer {
