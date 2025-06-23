@@ -1,10 +1,11 @@
 <template>
-    <div class="card">
-        <div class="card__image">
+    <div class="card" :class="{ loading: isLoading }">
+        <div v-if="!isLoading" class="card__image">
             <img :src="fullImageUrl" :alt="plant.name">
         </div>
+        <div v-else class="card__image loading bg-dark-cream"></div>
 
-        <div class="card__rating">
+        <div v-if="!isLoading" class="card__rating">
             <!-- Loop through 5 stars -->
             <span
                 v-for="i in 5"
@@ -15,15 +16,23 @@
                 ]"
             ></span>
         </div>
+        <div v-else class="card__rating w-full h-4 loading bg-dark-cream"></div>
 
-        <h2 class="card__name">{{ plant.name }}</h2>
-        <div class="card__price">
+        <h2 v-if="!isLoading" class="card__name">{{ plant.name }}</h2>
+        <div v-else class="card__name w-full flex">
+            <div class="w-[45%] h-4 loading bg-dark-cream mr-4"></div>
+            <div class="w-[25%] h-4 loading bg-dark-cream mr-auto"></div>
+        </div>
+
+        <div v-if="!isLoading" class="card__price">
             <span v-if="!plant.discount_percentage" >${{ plant.price }}</span>
             <div v-else>
                 <span>${{ plant.discounted_price }}</span>
                 <span class="line-through ml-2">${{ plant.price }}</span>
             </div>
         </div>
+        <div v-else class="card__price w-[25%] h-4 loading bg-dark-cream mr-auto"></div>
+
     </div>
 </template>
 
