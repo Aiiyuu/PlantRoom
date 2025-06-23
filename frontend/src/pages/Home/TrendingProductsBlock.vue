@@ -72,8 +72,6 @@
     </div>
 </template>
 
-
-
 <script lang="ts" setup>
 import PlantCard from "@/components/ui/PlantCard.vue"
 import { ref, onMounted, computed } from 'vue'
