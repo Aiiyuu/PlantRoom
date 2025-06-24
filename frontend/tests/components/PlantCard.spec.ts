@@ -237,6 +237,7 @@ describe('PlantCard.vue', (): void => {
         expect(wrapper.find('.card__price.loading').exists()).toBe(true);
 
         // Actual content (like plant name) should NOT be visible
-        expect(wrapper.find('.card__name').text()).not.toBe('Test Plant');
+        expect(wrapper.find('.card__name').text()).not.toBe(plant.name);
+        expect(wrapper.find('.card__price').text()).not.toBe(plant.price);
     })
 })
