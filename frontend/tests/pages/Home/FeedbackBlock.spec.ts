@@ -7,7 +7,9 @@
  *
  * The tests cover the following functionalities:
  * 1. Verifying that `FeedbackCard` components are rendered for each item feedback item.
- * 2. Verify that a "no items" message is displayed when the feedbacks state is empty and loading is false. *
+ * 2. Verify that a "no items" message is displayed when the feedbacks state is empty and loading is false.
+ * 3. Verify correct rendering of the loading skeleton
+ *
  *
  * The tests use mocked store data to simulate different feedback and loading states, and validate that the component
  * behaves as expected in these scenarios.
@@ -21,6 +23,9 @@ import FeedbackBlock from "@/pages/Home/FeedbackBlock.vue"
 import Feedback from '@/types/FeedbackInterface'
 import { setActivePinia, createPinia } from 'pinia'
 import { useFeedbackStore } from "@/store/feedbackStore"
+import TrendingProductsBlock from "@/pages/Home/TrendingProductsBlock.vue";
+import {useInventoryStore} from "@/store/inventoryStore";
+import PlantCard from "@/components/ui/PlantCard.vue";
 
 describe('FeedbackBlock.vue', (): void=> {
     // Mock response data
@@ -109,6 +114,27 @@ describe('FeedbackBlock.vue', (): void=> {
         // Check that the feedback__list is not displayed (v-if="feedbackStore.feedbacks?.length")
         const feedbackList = wrapper.find('.feedback__list');
         expect(feedbackList.exists()).toBe(false);
+    })
+
+    // ----------- Rendering loading skeleton -----------
+    it('renders loading skeletons', async () => {
+        // Mount the TrendingProductsBlock component fot testing
+        const wrapper = mount(FeedbackBlock)
+        const store = useFeedbackStore()
+
+        // Mock feedbacks
+        store.feedbacks = mockFeedbacks
+
+        // Set isLoading to true
+        store.isLoading = true;
+
+        await wrapper.vm.$nextTick() // Wait until Vue re-renders the component
+
+        // Find all FeedbackCard components rendered
+        const feedbackCards = wrapper.findAllComponents(FeedbackCard)
+
+        // Assert the number of PlantCards equals inventory length
+        expect(feedbackCards).toHaveLength(5);
     })
 })
 
