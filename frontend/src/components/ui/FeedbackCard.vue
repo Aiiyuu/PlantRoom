@@ -9,13 +9,12 @@
 
             <span v-if="!isLoading" class="card__header__date">{{ feedback.added_at }}</span>
             <div v-else class="card__header__date w-[30%] h-4 loading bg-cream"></div>
-
         </div>
 
         <div v-if="!isLoading" class="card__content">
             <p>{{ feedback.content }}</p>
         </div>
-        <div v-else>
+        <div v-else class="card__content">
             <div class="flex w-full mb-2">
                 <div class="w-[25%] h-4 loading bg-cream mr-4"></div>
                 <div class="w-[10%] h-4 loading bg-cream mr-4"></div>
