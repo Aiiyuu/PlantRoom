@@ -69,7 +69,7 @@ function activateMenu(e: Event) {
 
 <style lang="scss">
 .navbar {
-    @apply w-full h-12 bg-cream px-8 sm:px-16 py-4 text-dark fixed top-0 left-0 z-10;
+    @apply w-full h-12 bg-white px-8 sm:px-16 py-4 text-dark fixed top-0 left-0 z-10;
 
     &__logo {
         @apply ml-4 tracking-[14%] uppercase font-bold font-roboto;
@@ -120,7 +120,7 @@ function activateMenu(e: Event) {
     // adaptive menu
     &__adaptive-block {
         height: calc(100vh - 3rem);
-        @apply fixed top-12 right-0 w-screen bg-cream flex justify-center items-center
+        @apply fixed top-12 right-0 w-screen bg-white flex justify-center items-center
                translate-x-full ease-in-out duration-300;
 
         &.active {

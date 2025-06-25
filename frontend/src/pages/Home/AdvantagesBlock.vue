@@ -35,7 +35,7 @@
             <BaseButton
                 class="advantages-block__sub-block__button"
                 text="Shop now"
-                color="#FFBF78"
+                color="#2CA165"
                 textColor="#FFFDF6"
                 rotate="0deg"
             />
@@ -49,8 +49,8 @@ import BaseButton from "@/components/ui/BaseButton.vue"
 
 <style lang="scss" scoped>
 .advantages-block {
-    @apply relative w-full min-h-screen py-8 px-8 md:px-16 bg-dark-cream flex items-center
-        justify-between flex-col lg:flex-row;
+    @apply relative w-full min-h-screen py-8 px-8 md:px-16 bg-snow-vei flex items-center
+        justify-center flex-col lg:flex-row;
 
     &__sub-block {
         @apply relative;

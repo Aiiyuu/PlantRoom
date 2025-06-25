@@ -1,6 +1,7 @@
 <template>
     <button
         class="button-53"
+        :type="type"
         :style="{ background: color, color: textColor, rotate: rotate }"
         role="button"
     >
@@ -8,17 +9,24 @@
     </button>
 </template>
 
-
 <script setup lang="ts">
-const props = defineProps<{
-    text: string;
-    color?: string;
-    textColor?: string;
-    rotate?: number;
-    size?: 'sm' | 'md' | 'lg';
-}>();
+const props = withDefaults(
+    defineProps<{
+        text: string;
+        color?: string;
+        textColor?: string;
+        rotate?: number;
+        size?: 'sm' | 'md' | 'lg';
+        type?: 'submit' | 'reset' | 'button';
+    }>(),
+    {
+        color: '#2CA165',
+        textColor: '#FFFDF6',
+        rotate: 0,
+        type: 'button',
+    }
+)
 </script>
-
 
 <style lang="scss" scoped>
 .button-53 {

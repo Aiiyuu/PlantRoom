@@ -15,7 +15,7 @@
             <BaseButton
                 class="header__content__button"
                 text="Shop now"
-                color="#FFBF78"
+                color="#2CA165"
                 textColor="#FFFDF6"
                 rotate="0deg"
             />
@@ -35,7 +35,7 @@ import BaseButton from "@/components/ui/BaseButton.vue"
 
 <style lang="scss" scoped>
 .header {
-    @apply min-h-screen min-w-full bg-cream relative text-dark grid grid-cols-12 items-center overflow-hidden;
+    @apply min-h-screen min-w-full bg-white relative text-dark grid grid-cols-12 items-center overflow-hidden;
 
     &__decoration {
         @apply col-span-12 md:col-span-6 lg:col-span-7 order-2 md:order-1;
@@ -72,12 +72,12 @@ import BaseButton from "@/components/ui/BaseButton.vue"
             hidden md:block;
 
         span {
-            @apply relative block w-52 h-52 border-[20px] border-solid border-peach-orange rounded-full;
+            @apply relative block w-52 h-52 border-[20px] border-solid border-olive-grove rounded-full;
 
             &::before {
                 content: "";
                 @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 border-[15px] border-solid
-                    border-pale-yellow rounded-full;
+                    border-fresh-dew rounded-full;
             }
         }
     }

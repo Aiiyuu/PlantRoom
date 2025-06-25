@@ -1,13 +1,13 @@
 /**
  * @file feedbackStore.test.ts
  * @description
- * This file contains unit tests for the `feedbackStore` Pinia store using Vitest.
+ * This file contains unit tests for the `feedbackStore` Pinia stores using Vitest.
  *
  * The `feedbackStore` manages the feedbacks, including loading state, error handling.
  * It fetches data from an external API.
  *
  * The tests cover the following functionalities:
- * 1. Verifying the store initializes with the correct default state.
+ * 1. Verifying the stores initializes with the correct default state.
  * 2. Ensuring that `fetchInventory` correctly updates state on success.
  * 3. Testing error handling when `fetchInventory` fails.
  *
@@ -18,7 +18,7 @@ import { setActivePinia, createPinia } from "pinia"
 import { beforeEach, describe, test, vi, expect } from "vitest"
 import axios from 'axios'
 import Feedback from '@/types/FeedbackInterface'
-import { useFeedbackStore } from "@/store/feedbackStore"
+import { useFeedbackStore } from "@/stores/feedback"
 
 vi.mock('axios')
 
@@ -75,8 +75,8 @@ describe('FeedbackStore', (): void => {
         vi.clearAllMocks()
     })
 
-    // --------- Verify that the store initializes with the correct default state ---------
-    test('initializes store with correct default state', () => {
+    // --------- Verify that the stores initializes with the correct default state ---------
+    test('initializes stores with correct default state', () => {
         const inventory = useFeedbackStore()
 
         // Ensure the isLoading state is false by default

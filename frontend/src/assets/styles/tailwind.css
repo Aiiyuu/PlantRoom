@@ -5,25 +5,27 @@
 @tailwind utilities;
 
 body {
-    @apply bg-cream;
+    @apply bg-white;
 }
 
 * {
     @apply font-outfit text-dark;
 }
 
+
+/* ----------- Loading animation styles ---------- */
 .loading {
     cursor: wait;
 }
 
-.loading.bg-dark-cream,
-.loading.bg-cream {
+.loading.bg-snow-vei,
+.loading.bg-white {
     position: relative; /* needed for the pseudo-element */
     overflow: hidden; /* hide the shimmer overflow */
 }
 
-.loading.bg-dark-cream::before,
-.loading.bg-cream::before {
+.loading.bg-snow-vei::before,
+.loading.bg-white::before {
     content: "";
     position: absolute;
     top: 0;
@@ -36,7 +38,7 @@ body {
     z-index: 2;
 }
 
-.loading.bg-dark-cream::before {
+.loading.bg-snow-vei::before {
     background: linear-gradient(
             90deg,
             transparent,
@@ -45,7 +47,7 @@ body {
     );
 }
 
-.loading.bg-cream::before {
+.loading.bg-white::before {
     background: linear-gradient(
             90deg,
             transparent,
@@ -60,5 +62,106 @@ body {
     }
     100% {
         left: 150%;
+    }
+}
+
+
+/* ----------- Styles of authentication fields ---------- */
+.modal-overlay {
+    @apply relative w-full h-screen bg-white flex justify-center items-center;
+}
+
+.modal-content {
+    @apply relative w-[1050px] rounded-xl shadow-2xl flex flex-col md:flex-row overflow-hidden mx-4 md:mx-8 lg:mx-16;
+
+    .auth-image {
+        @apply hidden md:block w-[600px] bg-cover bg-right;
+        background-image: url("@/assets/images/auth-image.svg");
+    }
+
+    &.signup {
+        @apply xl:w-[1150px];
+
+        .auth-image {
+            @apply xl:w-[1200px] lg:w-[700px];
+        }
+    }
+
+    .go-home-button {
+        @apply absolute top-5 right-5;
+
+        span {
+            @apply relative block w-5 h-5
+                before:absolute before:top-1/2 before:-translate-y-1/2 before:w-full before:h-0.5 before:bg-dark before:rotate-45
+                after:absolute after:top-1/2 after:-translate-y-1/2 after:w-full after:h-0.5 after:bg-dark after:-rotate-45;
+        }
+    }
+}
+
+.auth {
+    @apply p-8 relative;
+
+    .auth-title {
+        @apply text-4xl font-bold text-dark mb-4;
+    }
+
+    .auth-text {
+        @apply font-normal text-sm text-dark;
+
+        a {
+            @apply text-blue-500;
+        }
+    }
+
+    .input-field {
+        @apply border-t-0 border-x-0 border-b-2 border-dark px-2 pb-2 w-full
+            flex flex-col-reverse relative;
+
+        input {
+            @apply bg-transparent w-full h-12 caret-dark outline-none text-dark bg-transparent;
+        }
+
+        label {
+            @apply absolute top-1/2 left-0 capitalize -translate-y-1/2 text-dark text-md duration-300 ease-out px-2;
+        }
+
+        .toggle-password {
+            @apply absolute top-1/2 right-0 -translate-y-1/2 w-5 h-full bg-center bg-contain bg-no-repeat bg-white;
+
+            &.eye-show {
+                background-image: url("@/assets/icons/eye-show.svg");
+            }
+
+            &.eye-off {
+                background-image: url("@/assets/icons/eye-off.svg");
+            }
+        }
+    }
+
+    .form-errors {
+        ul {
+            @apply list-disc pl-4;
+
+            li {
+                @apply text-red-600 text-sm;
+            }
+        }
+    }
+
+    .auth-submit-btn {
+        @apply w-full h-12;
+    }
+
+    input:focus~label,
+    input.filled~label {
+        @apply -translate-y-10 text-xs;
+    }
+
+    & > * {
+        @apply mb-10 flex flex-col;
+
+        &:last-child {
+            @apply mb-0;
+        }
     }
 }

@@ -6,16 +6,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'light-gray': '#F2F2F2',
-        cream: '#FFFDF6',
-        'dark-cream': '#FEF3E2',
-        'pale-yellow': '#FFEEA9',
-        'peach-orange': '#FFBF78',
-        dark: '#222831',
+        'dark': '#222831',
+        'soft-silver': '#F2F2F2',
+        'snow-vei': '#FBFBFB',
+        'olive-grove': '#5F8B4C',
+        'fresh-dew': '#DDF6D2'
       },
       fontFamily: {
         outfit: ['Outfit', 'sans-serif'],
         roboto: ['Roboto', 'sans-serif'],
+      },
+      fontSize: {
+        md: '16px',
       },
     },
   },
