@@ -9,7 +9,7 @@
  * 1. Verifying that `FeedbackCard` components are rendered for each item feedback item.
  * 2. Verify that a "no items" message is displayed when the feedbacks state is empty and loading is false. *
  *
- * The tests use mocked store data to simulate different feedback and loading states, and validate that the component
+ * The tests use mocked stores data to simulate different feedback and loading states, and validate that the component
  * behaves as expected in these scenarios.
  */
 
@@ -20,7 +20,7 @@ import FeedbackCard from '@/components/ui/FeedbackCard.vue'
 import FeedbackBlock from "@/pages/Home/FeedbackBlock.vue"
 import Feedback from '@/types/FeedbackInterface'
 import { setActivePinia, createPinia } from 'pinia'
-import { useFeedbackStore } from "@/store/feedbackStore"
+import { useFeedbackStore } from "@/stores/feedback"
 
 describe('FeedbackBlock.vue', (): void=> {
     // Mock response data

@@ -43,7 +43,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
-import { useFeedbackStore } from "@/store/feedbackStore"
+import { useFeedbackStore } from "@/stores/feedback"
 import FeedbackCard from "@/components/ui/FeedbackCard.vue"
 import Feedback from '@/types/FeedbackInterface'
 

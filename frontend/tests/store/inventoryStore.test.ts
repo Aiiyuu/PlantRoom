@@ -1,14 +1,14 @@
 /**
  * @file inventoryStore.test.ts
  * @description
- * This file contains unit tests for the `inventoryStore` Pinia store using Vitest.
+ * This file contains unit tests for the `inventoryStore` Pinia stores using Vitest.
  *
  * The `inventoryStore` manages the inventory of plant products, including loading state,
  * error handling, and sorting functionality. It fetches data from an external API
  * and allows users to sort inventory by rating, price, or name.
  *
  * The tests cover the following functionalities:
- * 1. Verifying the store initializes with the correct default state.
+ * 1. Verifying the stores initializes with the correct default state.
  * 2. Ensuring that `fetchInventory` correctly updates state on success.
  * 3. Testing error handling when `fetchInventory` fails.
  * 4. Confirming that `sortInventory` correctly sorts the inventory based on the selected sort method.
@@ -30,7 +30,7 @@ const mockedAxios = axios as unknown as {
     default: { mockResolvedValue: (value: any) => void }
 }
 
-import { useInventoryStore } from '@/store/inventoryStore'
+import { useInventoryStore } from '@/stores/inventory'
 
 
 // Mock response data
@@ -69,8 +69,8 @@ describe('InventoryStore', () => {
     })
 
 
-    // --------- Verify that the store initializes with the correct default state ---------
-    test('initializes store with correct default state', () => {
+    // --------- Verify that the stores initializes with the correct default state ---------
+    test('initializes stores with correct default state', () => {
         const inventory = useInventoryStore()
 
         // Ensure the isLoading state is false by default
@@ -117,7 +117,7 @@ describe('InventoryStore', () => {
 
         mockedAxios.default.mockRejectedValue(error)
 
-        // Run store fetch
+        // Run stores fetch
         await store.fetchInventory()
 
 

@@ -75,7 +75,7 @@
 <script lang="ts" setup>
 import PlantCard from "@/components/ui/PlantCard.vue"
 import { ref, onMounted, computed } from 'vue'
-import { useInventoryStore } from "@/store/inventoryStore"
+import { useInventoryStore } from "@/stores/inventory"
 
 const inventoryStore = useInventoryStore()
 
