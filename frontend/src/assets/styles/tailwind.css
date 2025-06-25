@@ -138,6 +138,16 @@ body {
         }
     }
 
+    .form-errors {
+        ul {
+            @apply list-disc pl-4;
+
+            li {
+                @apply text-red-600 text-sm;
+            }
+        }
+    }
+
     .auth-submit-btn {
         @apply w-full h-12;
     }
