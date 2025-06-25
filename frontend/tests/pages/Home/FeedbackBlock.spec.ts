@@ -20,7 +20,7 @@ import FeedbackCard from '@/components/ui/FeedbackCard.vue'
 import FeedbackBlock from "@/pages/Home/FeedbackBlock.vue"
 import Feedback from '@/types/FeedbackInterface'
 import { setActivePinia, createPinia } from 'pinia'
-import { useFeedbackStore } from "@/store/feedbackStore"
+import { useFeedbackStore } from "@/stores/feedback"
 
 describe('FeedbackBlock.vue', (): void=> {
     // Mock response data
