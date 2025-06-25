@@ -17,6 +17,9 @@ module.exports = {
         outfit: ['Outfit', 'sans-serif'],
         roboto: ['Roboto', 'sans-serif'],
       },
+      fontSize: {
+        md: '16px',
+      },
     },
   },
   plugins: [],
