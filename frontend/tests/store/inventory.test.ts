@@ -1,5 +1,5 @@
 /**
- * @file inventoryStore.test.ts
+ * @file inventory.test.ts
  * @description
  * This file contains unit tests for the `inventoryStore` Pinia stores using Vitest.
  *

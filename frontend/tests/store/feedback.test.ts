@@ -1,5 +1,5 @@
 /**
- * @file feedbackStore.test.ts
+ * @file feedback.test.ts
  * @description
  * This file contains unit tests for the `feedbackStore` Pinia stores using Vitest.
  *
