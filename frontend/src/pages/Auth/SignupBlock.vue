@@ -40,6 +40,13 @@
                     </p>
                 </div>
 
+                <!-- Error Messages -->
+                <div v-if="formErrors.length" class="form-errors">
+                    <ul>
+                        <li v-for="(error, index) in formErrors" :key="index">{{ error }}</li>
+                    </ul>
+                </div>
+
                 <BaseButton
                     class="auth-submit-btn"
                     text="Sign up"
@@ -60,26 +67,49 @@
 <script lang="ts" setup>
 import BaseButton from "@/components/ui/BaseButton.vue"
 import {reactive, ref} from 'vue'
+import SignupPayload from "@/types/SignupInterface"
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
+
+// Pinia store instance
+const auth = useAuthStore()
+
+// Vue Router instance (for redirection after signup)
+const router = useRouter()
 
 
 /* --------- Form management --------- */
 
-// Represents a signup object
-interface SignupFormData {
-    name: string
-    email: string
-    password: string
-}
-
 // Form data
-const formData = reactive<SignupFormData>({
+const formData = reactive<SignupPayload>({
     name: '',
     email: '',
     password: '',
 })
 
-function handleSignupForm() {
-    return
+// Error state
+const formErrors = ref<string[]>([])
+
+async function handleSignupForm() {
+    formErrors.value = [] // Clear previous errors
+
+    // Try calling the signup action from the store
+    const response = await auth.signup({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+    })
+
+    // If successful, redirect to login or home
+    if (!auth.errors.length) {
+        router.push({ name: 'login' })
+    } else {
+        auth.errors.forEach(error => {
+            if (!formErrors.value.includes(error)) {
+                formErrors.value.push(error);
+            }
+        });
+    }
 }
 
 
