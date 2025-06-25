@@ -17,6 +17,7 @@
                         :name="key"
                         :id="key"
                         :type="getInputType(key)"
+                        required
                         :class="{
                             filled: formData[key].trim() !== ''
                         }"
@@ -41,6 +42,13 @@
                     </p>
                 </div>
 
+                <!-- Error Messages -->
+                <div v-if="formErrors.length" class="form-errors">
+                    <ul>
+                        <li v-for="(error, index) in formErrors" :key="index">{{ error }}</li>
+                    </ul>
+                </div>
+
                 <BaseButton
                     class="auth-submit-btn"
                     text="Login"
@@ -61,24 +69,49 @@
 <script lang="ts" setup>
 import BaseButton from "@/components/ui/BaseButton.vue"
 import {reactive, ref} from 'vue'
+import LoginPayload from "@/types/LoginInterface"
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 
+// Pinia store instance
+const auth = useAuthStore()
+
+// Vue Router instance (for redirection after signup)
+const router = useRouter()
 
 /* --------- Form management --------- */
 
-// Represents a login object
-interface LoginFormData {
-    email: string
-    password: string
-}
-
 // Form data
-const formData = reactive<LoginFormData>({
+const formData = reactive<LoginPayload>({
     email: '',
     password: '',
 })
 
-function handleLoginForm() {
-    return
+// Error state
+const formErrors = ref<string[]>([])
+
+async function handleLoginForm() {
+    formErrors.value = [] // Clear previous errors
+
+    // Try calling the login action from the store
+    await auth.login({
+        email: formData.email,
+        password: formData.password
+    })
+
+    // If login is successful, redirect
+    if (auth.isAuthenticated) {
+        router.push({ name: 'home' }) // Or wherever you want
+    } else if (auth.errors.length) {
+        // Add new errors only if they are not duplicates
+        auth.errors.forEach(error => {
+            if (!formErrors.value.includes(error)) {
+                formErrors.value.push(error)
+            }
+        });
+    } else {
+        formErrors.value.push('Something went wrong during login.')
+    }
 }
 
 
