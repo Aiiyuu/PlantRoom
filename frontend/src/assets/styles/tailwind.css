@@ -18,14 +18,12 @@ body {
     cursor: wait;
 }
 
-.loading.bg-snow-vei,
-.loading.bg-white {
+.loading.bg-gray-200 {
     position: relative; /* needed for the pseudo-element */
     overflow: hidden; /* hide the shimmer overflow */
 }
 
-.loading.bg-snow-vei::before,
-.loading.bg-white::before {
+.loading.bg-gray-200::before{
     content: "";
     position: absolute;
     top: 0;
@@ -38,20 +36,11 @@ body {
     z-index: 2;
 }
 
-.loading.bg-snow-vei::before {
+.loading.bg-gray-200::before {
     background: linear-gradient(
             90deg,
             transparent,
             rgba(255, 255, 255, 0.6),
-            transparent
-    );
-}
-
-.loading.bg-white::before {
-    background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(232, 232, 232, 0.8),
             transparent
     );
 }
