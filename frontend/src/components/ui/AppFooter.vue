@@ -56,7 +56,7 @@
                     <h1 class="footer__sub-block__navigation__block_title">My Account</h1>
                     <ul class="footer__sub-block__navigation__block__list">
                         <li class="footer__sub-block__navigation__block__list__item">
-                            <router-link to="#">My Account</router-link>
+                            <router-link :to="{ name: 'auth' }">My Account</router-link>
                         </li>
                         <li class="footer__sub-block__navigation__block__list__item">
                             <router-link to="#">Cart</router-link>
