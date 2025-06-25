@@ -165,18 +165,18 @@
         }
 
         &:nth-child(1) {
-            @apply col-span-12 md:col-span-4 bg-cream text-dark;
+            @apply col-span-12 md:col-span-4 bg-white text-dark;
         }
 
         &:nth-child(2) {
-            @apply col-span-12 md:col-span-2 bg-peach-orange text-dark;
+            @apply col-span-12 md:col-span-2 lg:col-span-1 bg-olive-grove text-dark;
         }
 
         &:nth-child(3) {
-            @apply col-span-12 md:col-span-6 bg-dark;
+            @apply col-span-12 md:col-span-6 lg:col-span-7 bg-dark;
 
             * {
-                @apply text-cream;
+                @apply text-white;
             }
         }
     }

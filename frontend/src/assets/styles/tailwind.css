@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-    @apply bg-cream;
+    @apply bg-white;
 }
 
 * {
@@ -18,14 +18,14 @@ body {
     cursor: wait;
 }
 
-.loading.bg-dark-cream,
-.loading.bg-cream {
+.loading.bg-snow-vei,
+.loading.bg-white {
     position: relative; /* needed for the pseudo-element */
     overflow: hidden; /* hide the shimmer overflow */
 }
 
-.loading.bg-dark-cream::before,
-.loading.bg-cream::before {
+.loading.bg-snow-vei::before,
+.loading.bg-white::before {
     content: "";
     position: absolute;
     top: 0;
@@ -38,7 +38,7 @@ body {
     z-index: 2;
 }
 
-.loading.bg-dark-cream::before {
+.loading.bg-snow-vei::before {
     background: linear-gradient(
             90deg,
             transparent,
@@ -47,7 +47,7 @@ body {
     );
 }
 
-.loading.bg-cream::before {
+.loading.bg-white::before {
     background: linear-gradient(
             90deg,
             transparent,

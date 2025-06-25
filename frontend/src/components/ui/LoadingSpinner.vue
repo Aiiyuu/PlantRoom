@@ -4,7 +4,7 @@
 
 <style>
 .spinner {
-    @apply w-16 h-16 border-solid border-8 border-peach-orange border-r-cream rounded-full;
+    @apply w-16 h-16 border-solid border-8 border-olive-grove border-r-white rounded-full;
     animation: spinner 1s linear infinite;
 }
 

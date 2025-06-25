@@ -3,12 +3,12 @@
         <div class="card__header">
             <h1 v-if="!isLoading" class="card__header__title">{{ feedback.user.name }}</h1>
             <div v-else class="card__header__title w-full flex">
-                <div class="w-[25%] h-4 loading bg-cream mr-4"></div>
-                <div class="w-[15%] h-4 loading bg-cream"></div>
+                <div class="w-[25%] h-4 loading bg-white mr-4"></div>
+                <div class="w-[15%] h-4 loading bg-white"></div>
             </div>
 
             <span v-if="!isLoading" class="card__header__date">{{ feedback.added_at }}</span>
-            <div v-else class="card__header__date w-[30%] h-4 loading bg-cream"></div>
+            <div v-else class="card__header__date w-[30%] h-4 loading bg-white"></div>
 
         </div>
 
@@ -17,19 +17,19 @@
         </div>
         <div v-else>
             <div class="flex w-full mb-2">
-                <div class="w-[25%] h-4 loading bg-cream mr-4"></div>
-                <div class="w-[10%] h-4 loading bg-cream mr-4"></div>
-                <div class="w-[15%] h-4 loading bg-cream mr-4"></div>
-                <div class="w-[20%] h-4 loading bg-cream"></div>
+                <div class="w-[25%] h-4 loading bg-white mr-4"></div>
+                <div class="w-[10%] h-4 loading bg-white mr-4"></div>
+                <div class="w-[15%] h-4 loading bg-white mr-4"></div>
+                <div class="w-[20%] h-4 loading bg-white"></div>
             </div>
             <div class="flex w-full mb-2">
-                <div class="w-[20%] h-4 loading bg-cream mr-4"></div>
-                <div class="w-[35%] h-4 loading bg-cream mr-4"></div>
-                <div class="w-[25%] h-4 loading bg-cream"></div>
+                <div class="w-[20%] h-4 loading bg-white mr-4"></div>
+                <div class="w-[35%] h-4 loading bg-white mr-4"></div>
+                <div class="w-[25%] h-4 loading bg-white"></div>
             </div>
             <div class="flex w-full">
-                <div class="w-[35%] h-4 loading bg-cream mr-4"></div>
-                <div class="w-[15%] h-4 loading bg-cream"></div>
+                <div class="w-[35%] h-4 loading bg-white mr-4"></div>
+                <div class="w-[15%] h-4 loading bg-white"></div>
             </div>
         </div>
 
@@ -44,7 +44,7 @@
                 ]"
             ></span>
         </div>
-        <div v-else class="card__rating w-[40%] min-h-4 loading bg-cream"></div>
+        <div v-else class="card__rating w-[40%] min-h-4 loading bg-white"></div>
     </div>
 </template>
 
@@ -59,7 +59,7 @@ const props = defineProps<{
 
 <style lang="scss" scoped>
     .card {
-        @apply relative w-[380px] h-[200px] bg-dark-cream rounded-xl p-4 flex flex-col justify-between;
+        @apply relative w-[380px] h-[200px] bg-snow-vei rounded-xl p-4 flex flex-col justify-between;
 
         .card__header {
             @apply flex items-center justify-between;

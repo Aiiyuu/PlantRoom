@@ -152,7 +152,7 @@ function scrollCarousel(direction: "prev" | "next") {
 
 <style lang="scss" scoped>
 .trending-products {
-    @apply w-full min-h-screen bg-cream py-8 px-8 md:px-16 flex flex-col justify-center items-center;
+    @apply w-full min-h-screen bg-white py-8 px-8 md:px-16 flex flex-col justify-center items-center;
 
     &__title {
         @apply font-medium text-4xl

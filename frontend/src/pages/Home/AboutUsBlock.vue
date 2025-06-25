@@ -30,7 +30,7 @@
             <BaseButton
                 class="about-us__sub-block__button"
                 text="Shop now"
-                color="#FFBF78"
+                color="#2CA165"
                 textColor="#FFFDF6"
                 rotate="0deg"
             />
@@ -44,12 +44,16 @@ import BaseButton from "@/components/ui/BaseButton.vue"
 
 <style lang="scss" scoped>
 .about-us {
-    @apply min-w-full min-h-screen flex flex-col md:flex-row items-center justify-between
-        p-8 md:px-16 bg-dark-cream;
+    @apply min-w-full min-h-screen flex flex-col md:flex-row items-center justify-center
+        p-8 md:px-16 bg-snow-vei;
 
     &__sub-block {
         &:first-child {
             @apply md:mr-16 mb-16 md:mb-0;
+
+            img {
+                @apply w-full;
+            }
         }
 
         &__title {
@@ -69,10 +73,10 @@ import BaseButton from "@/components/ui/BaseButton.vue"
                 }
 
                 & > span {
-                  @apply relative block w-16 h-16 border-4 border-peach-orange rounded-full ease-out duration-500;
+                  @apply relative block w-16 h-16 border-4 border-olive-grove rounded-full ease-out duration-500;
 
                     & > span {
-                        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-peach-orange
+                        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-olive-grove
                             ease-out duration-500;
                     }
                 }
@@ -83,9 +87,9 @@ import BaseButton from "@/components/ui/BaseButton.vue"
 
                 &:hover {
                     & > span {
-                        @apply bg-peach-orange;
+                        @apply bg-olive-grove;
                         & > span {
-                            @apply text-cream;
+                            @apply text-white;
                         }
                     }
                 }

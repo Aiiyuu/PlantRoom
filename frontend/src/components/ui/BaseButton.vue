@@ -20,7 +20,7 @@ const props = withDefaults(
         type?: 'submit' | 'reset' | 'button';
     }>(),
     {
-        color: '#FFBF78',
+        color: '#2CA165',
         textColor: '#FFFDF6',
         rotate: 0,
         type: 'button',
