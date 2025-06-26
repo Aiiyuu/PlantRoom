@@ -191,20 +191,6 @@ watch(max, (val) => {
     if (val < min.value) max.value = min.value
     if (val > 1000) max.value = 1000
 })
-
-/**
- * Resets the price filter values to their default states.
- * This method is exposed to parent components so they can
- * programmatically reset the price filter when needed (e.g., on form reset).
- */
-function resetPrice() {
-    min.value = 10   // Reset min to default
-    max.value = 600  // Reset max to default
-}
-
-// Expose the resetPrice method to the parent component
-// so it can be called via template ref (e.g., priceFilter.value.resetPrice())
-defineExpose({ resetPrice })
 </script>
 
 <style lang="scss" scoped>
