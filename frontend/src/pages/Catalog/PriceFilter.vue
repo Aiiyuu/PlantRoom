@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-between w-full">
+            <div class="flex justify-between flex-col lg:flex-row w-full">
                 <div class="price-filter__form__field">
                     <label for="min-price">from</label>
                     <input
@@ -197,15 +197,15 @@ watch(max, (val) => {
 .price-filter {
     &__form {
         &__field {
-            @apply flex flex-col;
+            @apply flex flex-col mt-4;
 
             label {
                 @apply text-md text-dark font-normal mb-4;
             }
 
             input {
-                @apply bg-transparent outline-none w-32 h-10 border-2 px-4 ml-4 border-gray-200
-                rounded-xl focus:border-dark;
+                @apply bg-transparent outline-none lg:w-32 h-10 border-2 px-4 lg:ml-4 border-gray-200
+                    rounded-xl focus:border-dark;
 
                 /* Hide number input arrows for Chrome, Safari, Edge, Opera */
                 &::-webkit-outer-spin-button,
@@ -218,6 +218,10 @@ watch(max, (val) => {
                 &[type=number] {
                     -moz-appearance: textfield;
                 }
+            }
+
+            &:first-child {
+                @apply mb-4 lg:mb-0;
             }
         }
 
