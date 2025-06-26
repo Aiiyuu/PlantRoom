@@ -60,7 +60,7 @@ const fullImageUrl = computed(() => {
     @apply flex flex-col items-center justify-center;
 
     &__image {
-        @apply relative w-[230px] h-[320px] rounded-xl flex justify-center items-center;
+        @apply relative w-full h-[320px] rounded-xl flex justify-center items-center;
 
         img {
             @apply static;

@@ -51,7 +51,7 @@
                     class="trending-products__carousel__navigation__item prev"
                     @click="scrollCarousel('prev')"
                 >
-                    <img src="@/assets/icons/arrow.svg" alt="Previous" />
+                    <img src="../../assets/icons/arrow.svg" alt="Previous" />
                     <span>Prev</span>
                 </button>
 
@@ -60,7 +60,7 @@
                     @click="scrollCarousel('next')"
                 >
                     <span>Next</span>
-                    <img class="rotate-180" src="@/assets/icons/arrow.svg" alt="Next" />
+                    <img class="rotate-180" src="../../assets/icons/arrow.svg" alt="Next" />
                 </button>
             </div>
         </div>
@@ -194,7 +194,7 @@ function scrollCarousel(direction: "prev" | "next") {
             @apply h-full w-full flex items-start duration-300 ease-in-out;
 
             .card {
-                @apply mr-10;
+                @apply mr-10 min-w-[230px];
 
                 &:last-child {
                     @apply mr-0;
