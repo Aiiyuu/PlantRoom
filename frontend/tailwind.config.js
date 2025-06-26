@@ -20,6 +20,9 @@ module.exports = {
       fontSize: {
         md: '16px',
       },
+      maxWidth: {
+        'screen-w': '1728px',
+      },
     },
   },
   plugins: [],
