@@ -51,7 +51,7 @@
                     class="trending-products__carousel__navigation__item prev"
                     @click="scrollCarousel('prev')"
                 >
-                    <img src="@/assets/icons/arrow.svg" alt="Previous" />
+                    <img src="../../assets/icons/arrow.svg" alt="Previous" />
                     <span>Prev</span>
                 </button>
 
@@ -60,7 +60,7 @@
                     @click="scrollCarousel('next')"
                 >
                     <span>Next</span>
-                    <img class="rotate-180" src="@/assets/icons/arrow.svg" alt="Next" />
+                    <img class="rotate-180" src="../../assets/icons/arrow.svg" alt="Next" />
                 </button>
             </div>
         </div>
@@ -165,10 +165,10 @@ function scrollCarousel(direction: "prev" | "next") {
             @apply flex items-center mr-8;
 
             & > button {
-                @apply text-sm font-normal cursor-pointer opacity-60 duration-300 ease-out;
+                @apply text-sm font-normal cursor-pointer text-muted duration-300 ease-out;
 
                 &.selected {
-                    @apply opacity-100;
+                    @apply text-dark;
                 }
             }
 
@@ -194,7 +194,7 @@ function scrollCarousel(direction: "prev" | "next") {
             @apply h-full w-full flex items-start duration-300 ease-in-out;
 
             .card {
-                @apply mr-10;
+                @apply mr-10 min-w-[230px];
 
                 &:last-child {
                     @apply mr-0;
@@ -207,7 +207,7 @@ function scrollCarousel(direction: "prev" | "next") {
 
             &__item {
                 @apply relative flex items-center justify-center border-dark border-b-2 pb-2 opacity-100 duration-300
-                    ease-out hover:opacity-60;
+                    ease-out hover:opacity-50;
 
                 span {
                     @apply text-sm font-normal uppercase ml-2;

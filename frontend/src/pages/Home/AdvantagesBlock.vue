@@ -49,7 +49,7 @@ import BaseButton from "@/components/ui/BaseButton.vue"
 
 <style lang="scss" scoped>
 .advantages-block {
-    @apply relative w-full min-h-screen py-8 px-8 md:px-16 bg-snow-vei flex items-center
+    @apply relative w-full min-h-screen py-8 px-8 md:px-16 bg-white flex items-center
         justify-center flex-col lg:flex-row;
 
     &__sub-block {
@@ -68,7 +68,7 @@ import BaseButton from "@/components/ui/BaseButton.vue"
         }
 
         &__text {
-            @apply text-sm font-normal max-w-[700px];
+            @apply text-sm font-normal max-w-[600px];
         }
 
         &__advantages-list {
@@ -86,7 +86,7 @@ import BaseButton from "@/components/ui/BaseButton.vue"
                 }
 
                 h4 {
-                    @apply text-sm font-light;
+                    @apply text-sm font-normal;
                 }
             }
         }

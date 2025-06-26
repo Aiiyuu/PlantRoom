@@ -165,7 +165,7 @@
         }
 
         &:nth-child(1) {
-            @apply col-span-12 md:col-span-4 bg-white text-dark;
+            @apply col-span-12 md:col-span-4 bg-snow-vei text-dark;
         }
 
         &:nth-child(2) {

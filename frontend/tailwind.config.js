@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'dark': '#222831',
+        'dark': '#333333',
+        'muted': '#A0A0A0',
         'soft-silver': '#F2F2F2',
         'snow-vei': '#FBFBFB',
         'olive-grove': '#5F8B4C',
@@ -19,6 +20,12 @@ module.exports = {
       fontSize: {
         md: '16px',
       },
+      maxWidth: {
+        'screen-w': '1728px',
+      },
+      screens: {
+        '2xl': '1536px',
+      }
     },
   },
   plugins: [],

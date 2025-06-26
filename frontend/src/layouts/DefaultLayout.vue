@@ -2,11 +2,11 @@
     <div class="default-layout font-outfit">
         <AppNavbar />
 
-        <main class="max-w-[1600px] mx-auto">
+        <main class="max-w-screen-w mx-auto">
             <slot />
         </main>
 
-        <AppFooter class="max-w-[1600px] mx-auto" />
+        <AppFooter class="max-w-screen-w mx-auto" />
     </div>
 </template>
 
