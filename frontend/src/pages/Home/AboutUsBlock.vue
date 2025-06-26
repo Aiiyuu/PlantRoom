@@ -45,7 +45,7 @@ import BaseButton from "@/components/ui/BaseButton.vue"
 <style lang="scss" scoped>
 .about-us {
     @apply min-w-full min-h-screen flex flex-col md:flex-row items-center justify-center
-        p-8 md:px-16 bg-snow-vei;
+        p-8 md:px-16 bg-white;
 
     &__sub-block {
         &:first-child {
