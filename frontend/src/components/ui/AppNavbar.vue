@@ -69,7 +69,7 @@ function activateMenu(e: Event) {
 
 <style lang="scss">
 .navbar {
-    @apply w-full h-12 bg-white px-8 sm:px-16 py-4 text-dark fixed top-0 left-0 z-10;
+    @apply w-full h-12 bg-white px-8 sm:px-16 py-4 text-dark fixed top-0 left-0 z-50;
 
     &__logo {
         @apply ml-4 tracking-[14%] uppercase font-bold font-roboto;
