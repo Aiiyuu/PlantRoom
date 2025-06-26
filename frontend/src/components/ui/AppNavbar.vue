@@ -1,16 +1,16 @@
 <template>
     <nav class="navbar flex justify-between items-center">
-        <router-link class="flex items-center" to="/">
+        <router-link class="flex items-center" :to="{ name: 'home' }">
             <img src="@/assets/icons/logo-icon.svg" alt="">
             <h1 class="navbar__logo">PlantRoom</h1>
         </router-link>
 
         <ul class="navbar__menu-list hidden sm:flex">
             <li class="navbar__menu-list__item">
-                <router-link>Home</router-link>
+                <router-link :to="{ name: 'home' }">Home</router-link>
             </li>
             <li class="navbar__menu-list__item">
-                <router-link>Catalog</router-link>
+                <router-link :to="{ name: 'catalog' }">Catalog</router-link>
             </li>
             <li class="navbar__menu-list__item">
                 <router-link>Gallery</router-link>
@@ -25,10 +25,10 @@
         <div class="navbar__adaptive-block sm:hidden" ref="ADAPTIVE_MENU">
             <ul class="navbar__adaptive-block__menu-list">
                 <li class="navbar__adaptive-block__menu-list__item">
-                    <router-link>Home</router-link>
+                    <router-link :to="{ name: 'home' }">Home</router-link>
                 </li>
                 <li class="navbar__adaptive-block__menu-list__item">
-                    <router-link>Catalog</router-link>
+                    <router-link :to="{ name: 'catalog' }">Catalog</router-link>
                 </li>
                 <li class="navbar__adaptive-block__menu-list__item">
                     <router-link>Gallery</router-link>

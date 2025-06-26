@@ -2,6 +2,7 @@ import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 import HomePage from '@/pages/Home/HomePage.vue'
 import LoginBlock from "@/pages/Auth/LoginBlock.vue"
 import SignupBlock from "@/pages/Auth/SignupBlock.vue"
+import CatalogPage from "@/pages/Catalog/CatalogPage.vue"
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -28,6 +29,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'signup',
         component: SignupBlock,
         meta: { layout: 'AuthLayout' }
+    },
+    {
+        path: '/catalog',
+        name: 'catalog',
+        component: CatalogPage,
+        meta: { layout: 'CatalogLayout' },
     }
 ]
 

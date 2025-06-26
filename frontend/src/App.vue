@@ -11,6 +11,7 @@ import { ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router' // Import useRoute from vue-router
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import AuthLayout from '@/layouts/AuthLayout.vue'
+import CatalogLayout from '@/layouts/CatalogLayout.vue'
 
 const route = useRoute() // Get current route object
 const layout = ref(DefaultLayout) // Default layout is DefaultLayout
@@ -21,6 +22,8 @@ watchEffect(() => {
     const layoutMeta = route.meta.layout
     if (layoutMeta === 'AuthLayout') {
         layout.value = AuthLayout
+    } else if (layoutMeta === 'CatalogLayout') {
+        layout.value = CatalogLayout
     } else {
         layout.value = DefaultLayout
     }
