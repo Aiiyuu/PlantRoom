@@ -69,20 +69,19 @@ describe('FilterBar.vue', () => {
 
     // ----------- Verify that the filter checkboxes are bound to the store and update store values on user interaction -----------
     it('checkboxes are bound to store filter values and update on interaction', async () => {
-        // Find the checkboxes for "in stock" and "on discount" filters
+        // Find checkboxes (type inferred as VueWrapper<Element>)
         const inStockCheckbox = wrapper.find('#in-stock')
         const onDiscountCheckbox = wrapper.find('#on-discount')
 
-        // Assert initial checkbox states match the store filter values
-        expect(inStockCheckbox.element.checked).toBe(store.filter.in_stock)
-        expect(onDiscountCheckbox.element.checked).toBe(store.filter.on_discount)
+        // Assert initial checkbox states — cast .element to HTMLInputElement to access .checked
+        expect((inStockCheckbox.element as HTMLInputElement).checked).toBe(store.filter.in_stock)
+        expect((onDiscountCheckbox.element as HTMLInputElement).checked).toBe(store.filter.on_discount)
 
-        // Simulate checking the "in stock" checkbox, store value should update to true
-        await inStockCheckbox.setChecked(true)
+        // Use setValue(true) to simulate checking the checkbox (no casting needed)
+        await inStockCheckbox.setValue(true)
         expect(store.filter.in_stock).toBe(true)
 
-        // Simulate checking the "on discount" checkbox, store value should update to true
-        await onDiscountCheckbox.setChecked(true)
+        await onDiscountCheckbox.setValue(true)
         expect(store.filter.on_discount).toBe(true)
     })
 
