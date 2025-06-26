@@ -23,6 +23,9 @@ module.exports = {
       maxWidth: {
         'screen-w': '1728px',
       },
+      screens: {
+        '2xl': '1536px',
+      }
     },
   },
   plugins: [],
