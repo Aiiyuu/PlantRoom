@@ -59,7 +59,7 @@ const onDiscount = computed({
 <style lang="scss" scoped>
  .filter {
      &__wrapper {
-         @apply bg-gray-50 border-2 border-gray-200 rounded-xl px-4 py-8 md:w-[350px] h-full text-dark
+         @apply bg-snow-vei border-2 border-gray-100 rounded-xl px-4 py-8 w-full h-full text-dark
             flex flex-col justify-between;
 
          &__title {
@@ -79,7 +79,7 @@ const onDiscount = computed({
          }
 
          &__reset {
-             @apply bg-dark text-white py-2 px-8 hover:bg-gray-600 duration-300 ease-out rounded-xl;
+             @apply bg-dark text-white py-2 px-8 hover:bg-gray-600 duration-300 ease-out rounded-xl mt-8;
          }
 
          & > div > * {
