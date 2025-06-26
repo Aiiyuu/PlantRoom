@@ -241,15 +241,7 @@ watch(max, (val) => {
                     -webkit-appearance: none;
                 }
 
-                &::-moz-range-thumb {
-                    @apply w-5 h-5 rounded-full bg-gray-200 cursor-pointer;
-                }
-
-                &::-webkit-slider-runnable-track, {
-                    @apply bg-gray-200 h-1.5 rounded-sm;
-                }
-
-                &::-moz-range-track {
+                &::-webkit-slider-runnable-track {
                     @apply bg-gray-200 h-1.5 rounded-sm;
                 }
             }
@@ -261,21 +253,11 @@ watch(max, (val) => {
                 -webkit-appearance: none;
             }
 
-            #minRange::-moz-range-thumb {
-                @apply z-30 -translate-y-1/2 top-1/2 w-5 h-5 rounded-full cursor-pointer border-2;
-                background: radial-gradient(circle, white 30%, black 31%);
-            }
-
             // Style for max range thumb
             #maxRange::-webkit-slider-thumb {
                 @apply z-30 -translate-y-1/2 top-1/2 w-5 h-5 rounded-full cursor-pointer border-2;
                 background: radial-gradient(circle, white 30%, black 31%);
                 -webkit-appearance: none;
-            }
-
-            #maxRange::-moz-range-thumb {
-                @apply z-30 -translate-y-1/2 top-1/2 w-5 h-5 rounded-full cursor-pointer border-2;
-                background: radial-gradient(circle, white 30%, black 31%);
             }
         }
 
@@ -286,6 +268,12 @@ watch(max, (val) => {
                 @apply mb-0;
             }
         }
+    }
+}
+
+@-moz-document url-prefix() {
+    .price-filter__form__field.range {
+        display: none;
     }
 }
 </style>
