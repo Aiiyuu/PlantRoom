@@ -13,6 +13,8 @@
  * 3. Testing error handling when `fetchInventory` fails.
  * 4. Confirming that `sortInventory` correctly sorts the inventory based on the selected sort method.
  * 5. Verifying that `updateSortMethod` updates the sort method and triggers re-sorting.
+ * 6. Testing `filteredInventory` getter to ensure it returns items based on active filters.
+ * 7. Testing `sortedFilteredInventory` getter to ensure it returns filtered items sorted according to the active sort method.
  *
  * Axios is mocked to simulate API success and failure scenarios. Test data is used to validate
  * sorting behavior for different methods (`featured`, `cheapest`, `name`).
@@ -63,8 +65,12 @@ const mockPlants: Plant[] = [
 
 
 describe('InventoryStore', () => {
+    let store: ReturnType<typeof useInventoryStore>
+
     beforeEach(() => {
         setActivePinia(createPinia())
+        store = useInventoryStore()
+
         vi.clearAllMocks()
     })
 
@@ -84,12 +90,16 @@ describe('InventoryStore', () => {
 
         // Ensure the default sorting method is set to 'rating'
         expect(inventory.sortMethod).toBe('rating')
+
+        // Ensure filters have correct default values
+        expect(inventory.filter.in_stock).toBe(false)
+        expect(inventory.filter.in_stock).toBe(false)
+        expect(inventory.filter.price.min).toBe(0)
+        expect(inventory.filter.price.max).toBe(1000)
     })
 
     // --------- Ensures fetchInventory sets loading state, populates inventory, and clears errors on success ---------
     test('fetchInventory correctly updates state on success', async () => {
-        const store = useInventoryStore()
-
         // Set mock implementation
         mockedAxios.default.mockResolvedValue({ data: mockPlants })
 
@@ -104,8 +114,6 @@ describe('InventoryStore', () => {
 
     // -------- Ensure fetchInventory correctly handles case if something went wrong --------
     test('fetchInventory sets error state on failure', async () => {
-        const store = useInventoryStore()
-
         // Simulate Axios throwing an error
         const errorMessage = 'Network Error'
         const error = new Error(errorMessage)
@@ -129,8 +137,6 @@ describe('InventoryStore', () => {
 
     // -------- Ensure the `sortInventory` correctly sorts the inventory based on the provided sort method ---------
     test('sortInventory correctly updates sorts the inventory', () => {
-        const store = useInventoryStore()
-
         // Update the inventory state and the sortMethod state
         store.inventory = [ ...mockPlants ]
         store.sortMethod = 'featured'
@@ -145,8 +151,6 @@ describe('InventoryStore', () => {
 
     // -------- Ensure `updateSortMethod` updates `sortMethod` and re-sorts the inventory ---------
     test('updateSortMethod updates sortMethod and re-sorts the inventory', () => {
-        const store = useInventoryStore()
-
         // Update the inventory state by inserting plant objects
         store.inventory = [ ...mockPlants ]
 
@@ -161,5 +165,59 @@ describe('InventoryStore', () => {
 
         // Verify that the inventory list matches the expected sorted order
         expect(store.inventory).toEqual(expectedSorted)
+    })
+
+    // --------- Verify that filteredInventory returns items based on active filters ---------
+    test('filteredInventory returns filtered items based on active filters', () => {
+        // Populate the store inventory with mock plants
+        store.inventory = [...mockPlants] // <-- Add this line
+
+        // No filters applied: should return all items
+        expect(store.filteredInventory.length).toBe(2) // Since mockPlants has 2 items
+
+        // Apply filter: in_stock = true
+        store.filter.in_stock = true
+        expect(store.filteredInventory.every(p => p.in_stock)).toBe(true)
+
+        // Apply filter: on_discount = true, reset in_stock filter
+        store.filter.in_stock = false
+        store.filter.on_discount = true
+        expect(store.filteredInventory.every(p => p.discount_percentage > 0)).toBe(true)
+
+        // Apply price filter: min 9, max 15, reset on_discount filter
+        store.filter.on_discount = false
+        store.filter.price = { min: 9, max: 15 }
+        expect(store.filteredInventory.every(p => p.price >= 9 && p.price <= 15)).toBe(true)
+    })
+
+    // --------- Verify that sortedFilteredInventory returns items filtered and sorted according to sortMethod ---------
+    test('sortedFilteredInventory returns filtered and sorted items', () => {
+        store.inventory = [...mockPlants]
+        store.filter = {
+            in_stock: false,
+            on_discount: false,
+            price: { min: 0, max: 1000 }
+        }
+
+        // Sort by rating descending
+        store.sortMethod = 'Top Rated'
+
+        const sortedByRating = store.sortedFilteredInventory
+        expect(sortedByRating.length).toBeGreaterThan(0)
+        for (let i = 0; i < sortedByRating.length - 1; i++) {
+            expect(sortedByRating[i].rating).toBeGreaterThanOrEqual(sortedByRating[i + 1].rating)
+        }
+
+        // Sort by price ascending
+        store.sortMethod = 'Low to High'
+
+        const sortedByPrice = store.sortedFilteredInventory
+        for (let i = 0; i < sortedByPrice.length - 1; i++) {
+            expect(sortedByPrice[i].price).toBeLessThanOrEqual(sortedByPrice[i + 1].price)
+        }
+
+        // Unknown sort method returns filtered inventory without sorting
+        store.sortMethod = 'Unknown'
+        expect(store.sortedFilteredInventory).toEqual(store.filteredInventory)
     })
 })
