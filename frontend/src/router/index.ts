@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/catalog',
         name: 'catalog',
         component: CatalogPage,
-        meta: { layout: 'DefaultLayout' },
+        meta: { layout: 'CatalogLayout' },
     }
 ]
 
