@@ -210,10 +210,10 @@ onMounted(() => {
     }
 
     &__card-list {
-        @apply w-full grid grid-cols-12;
+        @apply w-full grid grid-cols-12 gap-x-4 gap-y-10;
 
         &__item {
-            @apply col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-6 xl:col-span-4 2xl:col-span-3 px-4 py-4;
+            @apply col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-6 xl:col-span-4 2xl:col-span-3;
 
             .card {
                 @apply w-full
