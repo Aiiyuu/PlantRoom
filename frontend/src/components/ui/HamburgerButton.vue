@@ -23,7 +23,7 @@ const line1Ref = ref<HTMLSpanElement | null>(null)
 const line2Ref = ref<HTMLSpanElement | null>(null)
 const line3Ref = ref<HTMLSpanElement | null>(null)
 
-// Arrays to store timeouts for add/remove actions
+// Arrays to stores timeouts for add/remove actions
 let enterTimeouts: number[] = []
 let leaveTimeouts: number[] = []
 

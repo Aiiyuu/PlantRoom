@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 body {
-    @apply bg-cream;
+    @apply bg-white;
 }
 
 * {
@@ -18,14 +18,12 @@ body {
     cursor: wait;
 }
 
-.loading.bg-dark-cream,
-.loading.bg-cream {
+.loading.bg-gray-200 {
     position: relative; /* needed for the pseudo-element */
     overflow: hidden; /* hide the shimmer overflow */
 }
 
-.loading.bg-dark-cream::before,
-.loading.bg-cream::before {
+.loading.bg-gray-200::before{
     content: "";
     position: absolute;
     top: 0;
@@ -38,20 +36,11 @@ body {
     z-index: 2;
 }
 
-.loading.bg-dark-cream::before {
+.loading.bg-gray-200::before {
     background: linear-gradient(
             90deg,
             transparent,
             rgba(255, 255, 255, 0.6),
-            transparent
-    );
-}
-
-.loading.bg-cream::before {
-    background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(232, 232, 232, 0.8),
             transparent
     );
 }
@@ -134,6 +123,16 @@ body {
 
             &.eye-off {
                 background-image: url("@/assets/icons/eye-off.svg");
+            }
+        }
+    }
+
+    .form-errors {
+        ul {
+            @apply list-disc pl-4;
+
+            li {
+                @apply text-red-600 text-sm;
             }
         }
     }

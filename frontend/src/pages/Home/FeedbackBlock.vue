@@ -43,7 +43,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
-import { useFeedbackStore } from "@/store/feedbackStore"
+import { useFeedbackStore } from "@/stores/feedback"
 import FeedbackCard from "@/components/ui/FeedbackCard.vue"
 import Feedback from '@/types/FeedbackInterface'
 
@@ -62,7 +62,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .feedback {
-    @apply relative w-full py-8 px-8 md:px-16 bg-cream flex flex-col items-center;
+    @apply relative w-full py-8 px-8 md:px-16 bg-white flex flex-col items-center;
 
     &__title {
         @apply text-4xl font-medium;

@@ -10,13 +10,13 @@
  * The tests cover the following functionalities:
  * 1. Rendering the title and sorting options (featured, cheapest, name).
  * 2. Ensuring the correct sorting method is selected when a user clicks on a sorting option.
- * 3. Checking that the store's `updateSortMethod` is called when the sorting method is changed.
+ * 3. Checking that the stores's `updateSortMethod` is called when the sorting method is changed.
  * 4. Testing the carousel's navigation functionality (scrolling to the next and previous items).
  * 5. Verifying that `PlantCard` components are rendered for each item in the inventory.
  * 6. Verify that a "no items" message is displayed when the inventory is empty and loading is false.
  * 7. Verify correct rendering of the loading skeleton
  *
- * The tests use mocked store data to simulate different inventory and loading states, and validate that the component
+ * The tests use mocked stores data to simulate different inventory and loading states, and validate that the component
  * behaves as expected in these scenarios.
  */
 
@@ -25,7 +25,7 @@ import { setActivePinia, createPinia } from "pinia"
 import { beforeEach, describe, it, expect, vi } from "vitest"
 import TrendingProductsBlock from '@/pages/Home/TrendingProductsBlock.vue'
 import PlantCard from '@/components/ui/PlantCard.vue'
-import { useInventoryStore } from "@/store/inventoryStore"
+import { useInventoryStore } from "@/stores/inventory"
 import Plant from '@/types/PlantInterface'
 
 // Mock response data
@@ -91,7 +91,7 @@ describe('TrendingProductsBlock.vue', (): void => {
     it('ensures the correct sorting method is selected when a user clicks on a sorting option', async () => {
         const wrapper = mount(TrendingProductsBlock)
 
-        // Access the mocked store instance after mount
+        // Access the mocked stores instance after mount
         const store = useInventoryStore()
 
         // Make sure the inventory state is not empty
@@ -112,8 +112,8 @@ describe('TrendingProductsBlock.vue', (): void => {
         expect(store.sortMethod).toBe('cheapest')
     })
 
-    // ----------- Verify that the store's `updateSortMethod` is called when the sorting method is changed -----------
-    it("verify that the store's `updateSortMethod` is called after changing the sorting method", async () => {
+    // ----------- Verify that the stores's `updateSortMethod` is called when the sorting method is changed -----------
+    it("verify that the stores's `updateSortMethod` is called after changing the sorting method", async () => {
         // Mount the TrendingProductsBlock component for testing
         const wrapper = mount(TrendingProductsBlock);
         const store = useInventoryStore();
@@ -125,7 +125,7 @@ describe('TrendingProductsBlock.vue', (): void => {
         // Wait for Vue to update
         await wrapper.vm.$nextTick()
 
-        // Spy on the store's method
+        // Spy on the stores's method
         const spy = vi.spyOn(store, 'updateSortMethod')
 
         // Find the sorting buttons

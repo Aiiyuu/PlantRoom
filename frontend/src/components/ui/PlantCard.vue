@@ -1,9 +1,9 @@
 <template>
     <div class="card" :class="{ loading: isLoading }">
-        <div v-if="!isLoading" class="card__image">
+        <div v-if="!isLoading" class="card__image bg-snow-vei">
             <img :src="fullImageUrl" :alt="plant.name">
         </div>
-        <div v-else class="card__image loading bg-dark-cream"></div>
+        <div v-else class="card__image loading bg-gray-200"></div>
 
         <div v-if="!isLoading" class="card__rating">
             <!-- Loop through 5 stars -->
@@ -16,12 +16,12 @@
                 ]"
             ></span>
         </div>
-        <div v-else class="card__rating w-full h-4 loading bg-dark-cream"></div>
+        <div v-else class="card__rating w-full h-4 loading bg-gray-200"></div>
 
         <h2 v-if="!isLoading" class="card__name">{{ plant.name }}</h2>
         <div v-else class="card__name w-full flex">
-            <div class="w-[45%] h-4 loading bg-dark-cream mr-4"></div>
-            <div class="w-[25%] h-4 loading bg-dark-cream mr-auto"></div>
+            <div class="w-[45%] h-4 loading bg-gray-200 mr-4"></div>
+            <div class="w-[25%] h-4 loading bg-gray-200 mr-auto"></div>
         </div>
 
         <div v-if="!isLoading" class="card__price">
@@ -31,7 +31,7 @@
                 <span class="line-through ml-2">${{ plant.price }}</span>
             </div>
         </div>
-        <div v-else class="card__price w-[25%] h-4 loading bg-dark-cream mr-auto"></div>
+        <div v-else class="card__price w-[25%] h-4 loading bg-gray-200 mr-auto"></div>
 
     </div>
 </template>
@@ -60,7 +60,7 @@ const fullImageUrl = computed(() => {
     @apply flex flex-col items-center justify-center;
 
     &__image {
-        @apply relative min-w-[230px] h-[320px] rounded-xl bg-dark-cream flex justify-center items-center;
+        @apply relative min-w-[230px] h-[320px] rounded-xl flex justify-center items-center;
 
         img {
             @apply static;
