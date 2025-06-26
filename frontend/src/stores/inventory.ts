@@ -20,6 +20,60 @@ export const useInventoryStore = defineStore('inventory', {
         }
     }),
 
+    getters: {
+        /**
+         * Returns the list of inventory items after applying all active filters.
+         */
+        filteredInventory(state): Plant[] {
+            return state.inventory.filter((plant) => {
+                // Apply in-stock filter only if it's enabled
+                const inStockFilter = !state.filter.in_stock || plant.in_stock
+
+                // Apply on-discount filter only if it's enabled
+                const onDiscountFilter = !state.filter.on_discount || plant.discount_percentage > 0
+
+                // Apply price filters (always applied)
+                const minPriceFilter = plant.price >= state.filter.price.min
+                const maxPriceFilter = plant.price <= state.filter.price.max
+
+                // Return true only if the plant satisfies all filters
+                return inStockFilter && onDiscountFilter && minPriceFilter && maxPriceFilter
+            })
+        },
+
+        /**
+         * Returns filtered items sorted by the selected sort method (e.g. price, rating, name).
+         */
+        sortedFilteredInventory(state): Plant[] {
+            const filtered = this.filteredInventory
+            const sortMethod = state.sortMethod
+            const sorted = [...filtered] // Copy to avoid mutating original
+
+            switch (true) {
+                case sortMethod === 'Low to High':
+                    return sorted.sort((a, b) => a.price - b.price)
+
+                case sortMethod === 'High to Low':
+                    return sorted.sort((a, b) => b.price - a.price)
+
+                case sortMethod === 'Top Rated':
+                    return sorted.sort((a, b) => b.rating - a.rating)
+
+                case sortMethod === 'Lowest Rated':
+                    return sorted.sort((a, b) => a.rating - b.rating)
+
+                case sortMethod === 'A to Z':
+                    return sorted.sort((a, b) => a.name.localeCompare(b.name))
+
+                case sortMethod === 'Z to A':
+                    return sorted.sort((a, b) => b.name.localeCompare(a.name))
+
+                default:
+                    return sorted
+            }
+        }
+    },
+
     actions: {
         /**
          * Fetch a list of inventory items from the API endpoint.
@@ -81,7 +135,7 @@ export const useInventoryStore = defineStore('inventory', {
         /**
          * Reset all filter values to their initial defaults
          */
-        resetFilters() {
+        resetFilters(): void {
             this.filter = {
                 in_stock: false,
                 on_discount: false,
