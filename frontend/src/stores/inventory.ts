@@ -8,7 +8,16 @@ export const useInventoryStore = defineStore('inventory', {
         inventory: [] as Plant[],
         sortMethod: 'rating',
         isLoading: false,
-        error: null as string | null
+        error: null as string | null,
+
+        filter: {
+            in_stock: false,
+            on_discount: false,
+            price: {
+                min: 0,
+                max: 1000,
+            }
+        }
     }),
 
     actions: {
@@ -67,6 +76,20 @@ export const useInventoryStore = defineStore('inventory', {
         updateSortMethod(sortMethod: string): void {
             this.sortMethod = sortMethod
             this.sortInventory() // Re-sort inventory when sortMethod changes
+        },
+
+        /**
+         * Reset all filter values to their initial defaults
+         */
+        resetFilters() {
+            this.filter = {
+                in_stock: false,
+                on_discount: false,
+                price: {
+                    min: 0,
+                    max: 1000,
+                },
+            }
         }
     }
 })
